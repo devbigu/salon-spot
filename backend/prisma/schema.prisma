@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Salon {
+  id            String   @id @default(uuid())
+  name          String
+
+  addressLine1  String?
+  addressLine2  String?
+
+  city          String?
+  state         String?
+  country       String?
+  postalCode    String?
+
+  phone         String?
+  email         String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  users         User[]
+  staff         Staff[]
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  phone_number String?  @unique
+  passwordHash String
+  role         Role     @default(STAFF)
+  salonId      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  staffProfile Staff?
+  salon        Salon?   @relation(fields: [salonId], references: [id])
+}
+
+model Staff {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  phone       String?
+  jobRole     String
+  workingFrom String
+  workingTo   String
+  weekOff     String
+  status      Boolean  @default(true)
+  salonId     String
+  userId      String?  @unique
+  managerId   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  manager     Staff?   @relation("StaffManager", fields: [managerId], references: [id])
+  teamMembers Staff[]  @relation("StaffManager")
+  salon       Salon    @relation(fields: [salonId], references: [id])
+  user        User?    @relation(fields: [userId], references: [id])
+
+  @@unique([salonId, email])
+}
+
+enum Role {
+  SUPER_ADMIN
+  SALON_ADMIN
+  STAFF
+}
