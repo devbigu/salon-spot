@@ -76,6 +76,11 @@ export const CustomerModel = {
                         name: true,
                     },
                 },
+                transactions: {
+                    orderBy: {
+                        createdAt: "desc",
+                    },
+                },
             },
         });
     },
@@ -92,6 +97,11 @@ export const CustomerModel = {
                         name: true,
                     },
                 },
+                transactions: {
+                    orderBy: {
+                        createdAt: "desc",
+                    },
+                },
             },
         });
     },
@@ -99,6 +109,14 @@ export const CustomerModel = {
         return prisma.customer.findFirst({
             where: {
                 phone,
+                salonId,
+            },
+        });
+    },
+    findByCustomerCodeAndSalon: async (customerCode, salonId) => {
+        return prisma.customer.findFirst({
+            where: {
+                customerCode,
                 salonId,
             },
         });
@@ -123,6 +141,58 @@ export const CustomerModel = {
         return prisma.customer.delete({
             where: {
                 id,
+            },
+        });
+    },
+    findTransactions: async (customerId, salonId) => {
+        return prisma.customerTransaction.findMany({
+            where: {
+                customerId,
+                salonId,
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
+    },
+    createTransaction: async (data) => {
+        return prisma.customerTransaction.create({
+            data,
+        });
+    },
+    addWalletAmount: async (customerId, amount) => {
+        return prisma.customer.update({
+            where: {
+                id: customerId,
+            },
+            data: {
+                walletBalance: {
+                    increment: amount,
+                },
+            },
+        });
+    },
+    increaseOutstanding: async (customerId, amount) => {
+        return prisma.customer.update({
+            where: {
+                id: customerId,
+            },
+            data: {
+                outstandingAmount: {
+                    increment: amount,
+                },
+            },
+        });
+    },
+    reduceOutstanding: async (customerId, amount) => {
+        return prisma.customer.update({
+            where: {
+                id: customerId,
+            },
+            data: {
+                outstandingAmount: {
+                    decrement: amount,
+                },
             },
         });
     },

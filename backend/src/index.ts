@@ -1,47 +1,33 @@
-import express , {type Request, type Response } from 'express';
+import express, { type Request, type Response } from "express";
 import cors from "cors";
-import cookiesParser from "cookie-parser";
-import dotenv from "dotenv";
-import { env } from "./config/env.js"
-import authRoutes from "./features/auth/auth.routes.js";
-import userRoutes from "./features/users/user.routes.js";
-import salonRoutes from "./features/salons/salon.routes.js";
-import branchRoutes from "./features/branches/branch.routes.js";
-import staffRoutes from "./features/staff/staff.routes.js";
-import customerRoutes from "./features/customers/customer.routes.js";
+import cookieParser from "cookie-parser";
 
-
-dotenv.config();
+import { env } from "./config/env.js";
+import apiRoutes from "./routes/index.js";
 
 const app = express();
 
+const PORT = env.PORT || 5000;
+
+// Global middlewares
 app.use(express.json());
-app.use(cookiesParser());
+app.use(cookieParser());
 
 app.use(
   cors({
-    origin: env.CLIENT_URL,
+    origin: env.CLIENT_URL || "http://localhost:3000",
     credentials: true,
   })
 );
 
-const PORT = env.PORT || 5000;
 
-app.use(cors({
-    origin: env.CLIENT_URL || "http://localhost:3000"
-}))
-app.use("/api/auth", authRoutes);
-app.get("/", (req: Request, res: Response)=>{
-    res.status(200).json({
-        success: true,
-        message: "Server is running"
-    })
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is running",
+  });
 });
-app.use("/api/branches", branchRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/salons", salonRoutes);
-app.use("/api/staff", staffRoutes);
-app.use("/api/customers", customerRoutes);
+
 
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({
@@ -50,6 +36,8 @@ app.get("/api/health", (req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT || 5000, () => {
+app.use("/api", apiRoutes);
+
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

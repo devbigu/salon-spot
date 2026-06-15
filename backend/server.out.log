@@ -2,6 +2,5 @@
 > backend@1.0.0 start
 > tsx src/index.ts
 
-◇ injected env (5) from .env // tip: ⌘ override existing { override: true }
-◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (5) from .env // tip: ⌁ auth for agents [www.vestauth.com]
 Server running on port 5000
