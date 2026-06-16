@@ -1,0 +1,13 @@
+import { Router } from "express";
+import { createMainService, getMainServices, getMainServiceById, updateMainService, updateMainServiceStatus, deleteMainService, } from "./mainService.controller.js";
+import { authenticate } from "../../middlewares/auth.middleware.js";
+import { requireRole } from "../../middlewares/rbac.middleware.js";
+const router = Router();
+router.use(authenticate);
+router.post("/", requireRole("SUPER_ADMIN", "SALON_ADMIN"), createMainService);
+router.get("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), getMainServices);
+router.patch("/:id/status", requireRole("SUPER_ADMIN", "SALON_ADMIN"), updateMainServiceStatus);
+router.get("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), getMainServiceById);
+router.put("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN"), updateMainService);
+router.delete("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN"), deleteMainService);
+export default router;

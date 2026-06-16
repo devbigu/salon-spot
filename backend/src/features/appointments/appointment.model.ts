@@ -367,5 +367,142 @@ export const AppointmentModel = {
       },
     });
   },
- 
+ updateSchedule: async (
+  id: string,
+  data: {
+    startTime: Date;
+    endTime: Date;
+  }
+) => {
+  return prisma.appointment.update({
+    where: {
+      id,
+    },
+    data: {
+      startTime: data.startTime,
+      endTime: data.endTime,
+    },
+    include: {
+      customer: {
+        select: {
+          id: true,
+          name: true,
+          phone: true,
+          customerCode: true,
+        },
+      },
+      staff: {
+        select: {
+          id: true,
+          name: true,
+          jobRole: true,
+        },
+      },
+      branch: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      services: {
+        include: {
+          service: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+},
+findInvoiceSourceById: async (id: string) => {
+  return prisma.appointment.findUnique({
+    where: { id },
+    include: {
+      salon: {
+        select: {
+          id: true,
+          name: true,
+          phone: true,
+          email: true,
+          addressLine1: true,
+          addressLine2: true,
+          city: true,
+          state: true,
+          country: true,
+          postalCode: true,
+        },
+      },
+      branch: {
+        select: {
+          id: true,
+          name: true,
+          addressLine1: true,
+          city: true,
+          state: true,
+          postalCode: true,
+          phone: true,
+        },
+      },
+      customer: {
+        select: {
+          id: true,
+          name: true,
+          phone: true,
+          email: true,
+          gst: true,
+        },
+      },
+      services: true,
+    },
+  });
+},
+
+findInvoiceSourceByIdAndSalon: async (id: string, salonId: string) => {
+  return prisma.appointment.findFirst({
+    where: {
+      id,
+      salonId,
+    },
+    include: {
+      salon: {
+        select: {
+          id: true,
+          name: true,
+          phone: true,
+          email: true,
+          addressLine1: true,
+          addressLine2: true,
+          city: true,
+          state: true,
+          country: true,
+          postalCode: true,
+        },
+      },
+      branch: {
+        select: {
+          id: true,
+          name: true,
+          addressLine1: true,
+          city: true,
+          state: true,
+          postalCode: true,
+          phone: true,
+        },
+      },
+      customer: {
+        select: {
+          id: true,
+          name: true,
+          phone: true,
+          email: true,
+          gst: true,
+        },
+      },
+      services: true,
+    },
+  });
+},
 };

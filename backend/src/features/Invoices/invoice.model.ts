@@ -1,0 +1,372 @@
+import { prisma } from "../../config/prisma.js";
+
+type InvoiceType = "GST_INVOICE" | "BILL_OF_SUPPLY";
+type InvoiceStatus = "DRAFT" | "ISSUED" | "CANCELLED";
+type PaymentStatus = "UNPAID" | "PARTIALLY_PAID" | "PAID";
+
+type CreateInvoiceItemInput = {
+  serviceId?: string;
+  itemCode?: string;
+  description: string;
+  serviceName: string;
+  quantity?: number;
+  unitPrice: number;
+  discountAmount?: number;
+  taxPercent?: number;
+  taxAmount?: number;
+  lineTotal: number;
+};
+
+export const InvoiceModel = {
+  create: async (data: {
+    invoiceCode: string;
+
+    salonId: string;
+    branchId?: string;
+    customerId: string;
+    appointmentId?: string;
+
+    invoiceType?: InvoiceType;
+
+    salonName: string;
+    salonPhone?: string;
+    salonEmail?: string;
+    salonAddress?: string;
+    salonGst?: string;
+
+    customerName: string;
+    customerPhone?: string;
+    customerEmail?: string;
+    customerAddress?: string;
+    customerGst?: string;
+
+    subtotalAmount: number;
+    discountAmount: number;
+    processingFeeAmount: number;
+    taxAmount: number;
+    totalAmount: number;
+
+    paidAmount?: number;
+    balanceAmount: number;
+
+    status?: InvoiceStatus;
+    paymentStatus?: PaymentStatus;
+
+    billingNote?: string;
+    footerNote?: string;
+
+    items: CreateInvoiceItemInput[];
+  }) => {
+    return prisma.invoice.create({
+      data: {
+        invoiceCode: data.invoiceCode,
+
+        salonId: data.salonId,
+        ...(data.branchId ? { branchId: data.branchId } : {}),
+        customerId: data.customerId,
+        ...(data.appointmentId ? { appointmentId: data.appointmentId } : {}),
+
+        invoiceType: data.invoiceType || "BILL_OF_SUPPLY",
+
+        salonName: data.salonName,
+        ...(data.salonPhone ? { salonPhone: data.salonPhone } : {}),
+        ...(data.salonEmail ? { salonEmail: data.salonEmail } : {}),
+        ...(data.salonAddress ? { salonAddress: data.salonAddress } : {}),
+        ...(data.salonGst ? { salonGst: data.salonGst } : {}),
+
+        customerName: data.customerName,
+        ...(data.customerPhone ? { customerPhone: data.customerPhone } : {}),
+        ...(data.customerEmail ? { customerEmail: data.customerEmail } : {}),
+        ...(data.customerAddress
+          ? { customerAddress: data.customerAddress }
+          : {}),
+        ...(data.customerGst ? { customerGst: data.customerGst } : {}),
+
+        subtotalAmount: data.subtotalAmount,
+        discountAmount: data.discountAmount,
+        processingFeeAmount: data.processingFeeAmount,
+        taxAmount: data.taxAmount,
+        totalAmount: data.totalAmount,
+
+        paidAmount: data.paidAmount || 0,
+        balanceAmount: data.balanceAmount,
+
+        status: data.status || "ISSUED",
+        paymentStatus: data.paymentStatus || "UNPAID",
+
+        ...(data.billingNote ? { billingNote: data.billingNote } : {}),
+        ...(data.footerNote ? { footerNote: data.footerNote } : {}),
+
+        items: {
+          create: data.items.map((item) => ({
+            ...(item.serviceId ? { serviceId: item.serviceId } : {}),
+            ...(item.itemCode ? { itemCode: item.itemCode } : {}),
+
+            description: item.description,
+            serviceName: item.serviceName,
+
+            quantity: item.quantity || 1,
+            unitPrice: item.unitPrice,
+
+            discountAmount: item.discountAmount || 0,
+            taxPercent: item.taxPercent || 0,
+            taxAmount: item.taxAmount || 0,
+
+            lineTotal: item.lineTotal,
+          })),
+        },
+      },
+      include: {
+        salon: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        branch: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        customer: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            customerCode: true,
+          },
+        },
+        appointment: {
+          select: {
+            id: true,
+            appointmentCode: true,
+            status: true,
+          },
+        },
+        items: true,
+        payments: true,
+      },
+    });
+  },
+
+  findAll: async () => {
+    return prisma.invoice.findMany({
+      include: {
+        salon: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        branch: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        customer: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            customerCode: true,
+          },
+        },
+        items: true,
+        payments: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  },
+
+  findBySalon: async (
+    salonId: string,
+    filters?: {
+      branchId?: string;
+      customerId?: string;
+      paymentStatus?: PaymentStatus;
+      status?: InvoiceStatus;
+    }
+  ) => {
+    return prisma.invoice.findMany({
+      where: {
+        salonId,
+        ...(filters?.branchId ? { branchId: filters.branchId } : {}),
+        ...(filters?.customerId ? { customerId: filters.customerId } : {}),
+        ...(filters?.paymentStatus
+          ? { paymentStatus: filters.paymentStatus }
+          : {}),
+        ...(filters?.status ? { status: filters.status } : {}),
+      },
+      include: {
+        branch: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        customer: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            customerCode: true,
+          },
+        },
+        items: true,
+        payments: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  },
+
+  findById: async (id: string) => {
+    return prisma.invoice.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        salon: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            email: true,
+            addressLine1: true,
+            addressLine2: true,
+            city: true,
+            state: true,
+            country: true,
+            postalCode: true,
+          },
+        },
+        branch: {
+          select: {
+            id: true,
+            name: true,
+            addressLine1: true,
+            city: true,
+            state: true,
+            postalCode: true,
+            phone: true,
+          },
+        },
+        customer: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            email: true,
+            gst: true,
+            customerCode: true,
+            outstandingAmount: true,
+            walletBalance: true,
+          },
+        },
+        appointment: {
+          select: {
+            id: true,
+            appointmentCode: true,
+            status: true,
+            startTime: true,
+            endTime: true,
+          },
+        },
+        items: true,
+        payments: true,
+      },
+    });
+  },
+
+  findByIdAndSalon: async (id: string, salonId: string) => {
+    return prisma.invoice.findFirst({
+      where: {
+        id,
+        salonId,
+      },
+      include: {
+        branch: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        customer: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            email: true,
+            gst: true,
+            customerCode: true,
+            outstandingAmount: true,
+            walletBalance: true,
+          },
+        },
+        appointment: {
+          select: {
+            id: true,
+            appointmentCode: true,
+            status: true,
+            startTime: true,
+            endTime: true,
+          },
+        },
+        items: true,
+        payments: true,
+      },
+    });
+  },
+
+  findByAppointmentIdAndSalon: async (
+    appointmentId: string,
+    salonId: string
+  ) => {
+    return prisma.invoice.findFirst({
+      where: {
+        appointmentId,
+        salonId,
+      },
+    });
+  },
+
+  updatePaymentSummary: async (
+    id: string,
+    data: {
+      paidAmount: number;
+      balanceAmount: number;
+      paymentStatus: PaymentStatus;
+    }
+  ) => {
+    return prisma.invoice.update({
+      where: {
+        id,
+      },
+      data: {
+        paidAmount: data.paidAmount,
+        balanceAmount: data.balanceAmount,
+        paymentStatus: data.paymentStatus,
+      },
+      include: {
+        items: true,
+        payments: true,
+      },
+    });
+  },
+
+  cancel: async (id: string) => {
+    return prisma.invoice.update({
+      where: {
+        id,
+      },
+      data: {
+        status: "CANCELLED",
+      },
+    });
+  },
+};

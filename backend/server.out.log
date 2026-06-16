@@ -1,6 +1,6 @@
 
 > backend@1.0.0 start
-> tsx src/index.ts
+> tsx dist/index.js
 
-◇ injected env (5) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+◇ injected env (5) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
 Server running on port 5000

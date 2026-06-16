@@ -427,6 +427,104 @@ export const updateAppointmentBasicDetails = async (
   }
 };
 
+export const rescheduleAppointment = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const id = getAppointmentIdParam(req);
+
+    const { startTime } = req.body as {
+      startTime?: string;
+    };
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Appointment ID is required",
+      });
+    }
+
+    if (!startTime) {
+      return res.status(400).json({
+        success: false,
+        message: "New startTime is required",
+      });
+    }
+
+    const existingAppointment = await getExistingAppointmentByAccess(req, id);
+
+    if (!existingAppointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
+
+    if (
+      existingAppointment.status === "COMPLETED" ||
+      existingAppointment.status === "CANCELLED" ||
+      existingAppointment.status === "NO_SHOW"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Completed, cancelled or no-show appointments cannot be rescheduled",
+      });
+    }
+
+    const finalStartTime = new Date(startTime);
+
+    if (Number.isNaN(finalStartTime.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid startTime",
+      });
+    }
+
+    if (existingAppointment.totalDurationMinutes <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Appointment duration is invalid",
+      });
+    }
+
+    const finalEndTime = new Date(
+      finalStartTime.getTime() +
+        existingAppointment.totalDurationMinutes * 60 * 1000
+    );
+
+    const conflict = await AppointmentModel.findConflict({
+      staffId: existingAppointment.staffId,
+      startTime: finalStartTime,
+      endTime: finalEndTime,
+      excludeAppointmentId: id,
+    });
+
+    if (conflict) {
+      return res.status(409).json({
+        success: false,
+        message: "Staff is already booked for this time slot",
+      });
+    }
+
+    const updatedAppointment = await AppointmentModel.updateSchedule(id, {
+      startTime: finalStartTime,
+      endTime: finalEndTime,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Appointment rescheduled successfully",
+      data: updatedAppointment,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
 export const deleteAppointment = async (req: Request, res: Response) => {
   try {
     const id = getAppointmentIdParam(req);

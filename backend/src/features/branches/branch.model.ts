@@ -54,4 +54,5 @@ export const BranchModel = {
   findByIdandSalon: async (id: string, salonId: string) => {
     return BranchModel.findByIdAndSalon(id, salonId);
   },
+  
 };

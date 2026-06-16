@@ -1,0 +1,41 @@
+import { Router } from "express";
+
+import {
+  createInvoiceFromAppointment,
+  getInvoices,
+  getInvoiceById,
+  cancelInvoice,
+} from "./invoice.controller.js";
+
+import { authenticate } from "../../middlewares/auth.middleware.js";
+import { requireRole } from "../../middlewares/rbac.middleware.js";
+
+const router = Router();
+
+router.use(authenticate);
+
+router.post(
+  "/from-appointment/:appointmentId",
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  createInvoiceFromAppointment
+);
+
+router.get(
+  "/",
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  getInvoices
+);
+
+router.patch(
+  "/:id/cancel",
+  requireRole("SUPER_ADMIN", "SALON_ADMIN"),
+  cancelInvoice
+);
+
+router.get(
+  "/:id",
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  getInvoiceById
+);
+
+export default router;

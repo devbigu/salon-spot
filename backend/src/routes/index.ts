@@ -9,6 +9,8 @@ import customerRoutes from "../features/customers/customer.routes.js";
 import mainServiceRoutes from "../features/main-services/mainService.routes.js";
 import serviceRoutes from "../features/services/service.routes.js";
 import appointmentRoutes from "../features/appointments/appointment.routes.js";
+import invoiceRoutes from "../features/Invoices/invoice.routes.js";
+import paymentRoutes from "../features/Payments/payment.routes.js";
 
 
 
@@ -23,5 +25,8 @@ router.use("/customers", customerRoutes);
 router.use("/main-services", mainServiceRoutes);
 router.use("/services", serviceRoutes);
 router.use("/appointments", appointmentRoutes);
+router.use("/invoices", invoiceRoutes)
+router.use("/payments", paymentRoutes)
+
 
 export default router;
