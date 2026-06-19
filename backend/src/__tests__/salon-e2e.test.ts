@@ -429,6 +429,7 @@ describe("Salon SaaS backend E2E flow", () => {
       .send({
         name: "E2E Staff B",
         email: `staff-b-${stamp}@example.com`,
+        phone: "9822222222",
         jobRole: "Stylist",
         workingFrom: "10:00",
         workingTo: "19:00",

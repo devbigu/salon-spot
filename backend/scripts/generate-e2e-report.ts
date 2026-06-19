@@ -750,6 +750,7 @@ const main = async () => {
     body: {
       name: "Report Staff B",
       email: `report-staff-b-${stamp}@example.com`,
+      phone: "9822222222",
       jobRole: "Stylist",
       workingFrom: "10:00",
       workingTo: "19:00",

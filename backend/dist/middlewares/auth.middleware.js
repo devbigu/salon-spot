@@ -29,6 +29,9 @@ export const authenticate = (req, res, next) => {
             userId: decoded.userId,
             role: decoded.role,
             ...(typeof decoded.salonId === "string" ? { salonId: decoded.salonId } : {}),
+            ...(typeof decoded.branchId === "string"
+                ? { branchId: decoded.branchId }
+                : {}),
         };
         req.user = user;
         next();

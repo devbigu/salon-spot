@@ -26,6 +26,7 @@ export type AggregateStaff = {
 
 export type StaffMinAggregateOutputType = {
   id: string | null
+  staffCode: string | null
   name: string | null
   email: string | null
   phone: string | null
@@ -33,6 +34,7 @@ export type StaffMinAggregateOutputType = {
   workingFrom: string | null
   workingTo: string | null
   weekOff: string | null
+  joiningDate: Date | null
   status: boolean | null
   salonId: string | null
   userId: string | null
@@ -44,6 +46,7 @@ export type StaffMinAggregateOutputType = {
 
 export type StaffMaxAggregateOutputType = {
   id: string | null
+  staffCode: string | null
   name: string | null
   email: string | null
   phone: string | null
@@ -51,6 +54,7 @@ export type StaffMaxAggregateOutputType = {
   workingFrom: string | null
   workingTo: string | null
   weekOff: string | null
+  joiningDate: Date | null
   status: boolean | null
   salonId: string | null
   userId: string | null
@@ -62,6 +66,7 @@ export type StaffMaxAggregateOutputType = {
 
 export type StaffCountAggregateOutputType = {
   id: number
+  staffCode: number
   name: number
   email: number
   phone: number
@@ -69,6 +74,7 @@ export type StaffCountAggregateOutputType = {
   workingFrom: number
   workingTo: number
   weekOff: number
+  joiningDate: number
   status: number
   salonId: number
   userId: number
@@ -82,6 +88,7 @@ export type StaffCountAggregateOutputType = {
 
 export type StaffMinAggregateInputType = {
   id?: true
+  staffCode?: true
   name?: true
   email?: true
   phone?: true
@@ -89,6 +96,7 @@ export type StaffMinAggregateInputType = {
   workingFrom?: true
   workingTo?: true
   weekOff?: true
+  joiningDate?: true
   status?: true
   salonId?: true
   userId?: true
@@ -100,6 +108,7 @@ export type StaffMinAggregateInputType = {
 
 export type StaffMaxAggregateInputType = {
   id?: true
+  staffCode?: true
   name?: true
   email?: true
   phone?: true
@@ -107,6 +116,7 @@ export type StaffMaxAggregateInputType = {
   workingFrom?: true
   workingTo?: true
   weekOff?: true
+  joiningDate?: true
   status?: true
   salonId?: true
   userId?: true
@@ -118,6 +128,7 @@ export type StaffMaxAggregateInputType = {
 
 export type StaffCountAggregateInputType = {
   id?: true
+  staffCode?: true
   name?: true
   email?: true
   phone?: true
@@ -125,6 +136,7 @@ export type StaffCountAggregateInputType = {
   workingFrom?: true
   workingTo?: true
   weekOff?: true
+  joiningDate?: true
   status?: true
   salonId?: true
   userId?: true
@@ -209,6 +221,7 @@ export type StaffGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type StaffGroupByOutputType = {
   id: string
+  staffCode: string | null
   name: string
   email: string
   phone: string | null
@@ -216,6 +229,7 @@ export type StaffGroupByOutputType = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate: Date
   status: boolean
   salonId: string
   userId: string | null
@@ -248,6 +262,7 @@ export type StaffWhereInput = {
   OR?: Prisma.StaffWhereInput[]
   NOT?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
   id?: Prisma.StringFilter<"Staff"> | string
+  staffCode?: Prisma.StringNullableFilter<"Staff"> | string | null
   name?: Prisma.StringFilter<"Staff"> | string
   email?: Prisma.StringFilter<"Staff"> | string
   phone?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -255,6 +270,7 @@ export type StaffWhereInput = {
   workingFrom?: Prisma.StringFilter<"Staff"> | string
   workingTo?: Prisma.StringFilter<"Staff"> | string
   weekOff?: Prisma.StringFilter<"Staff"> | string
+  joiningDate?: Prisma.DateTimeFilter<"Staff"> | Date | string
   status?: Prisma.BoolFilter<"Staff"> | boolean
   salonId?: Prisma.StringFilter<"Staff"> | string
   userId?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -273,6 +289,7 @@ export type StaffWhereInput = {
 
 export type StaffOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  staffCode?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -280,6 +297,7 @@ export type StaffOrderByWithRelationInput = {
   workingFrom?: Prisma.SortOrder
   workingTo?: Prisma.SortOrder
   weekOff?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   salonId?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -300,9 +318,11 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   userId?: string
   salonId_email?: Prisma.StaffSalonIdEmailCompoundUniqueInput
+  salonId_staffCode?: Prisma.StaffSalonIdStaffCodeCompoundUniqueInput
   AND?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
   OR?: Prisma.StaffWhereInput[]
   NOT?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
+  staffCode?: Prisma.StringNullableFilter<"Staff"> | string | null
   name?: Prisma.StringFilter<"Staff"> | string
   email?: Prisma.StringFilter<"Staff"> | string
   phone?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -310,6 +330,7 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   workingFrom?: Prisma.StringFilter<"Staff"> | string
   workingTo?: Prisma.StringFilter<"Staff"> | string
   weekOff?: Prisma.StringFilter<"Staff"> | string
+  joiningDate?: Prisma.DateTimeFilter<"Staff"> | Date | string
   status?: Prisma.BoolFilter<"Staff"> | boolean
   salonId?: Prisma.StringFilter<"Staff"> | string
   reportingManagerId?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -323,10 +344,11 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   salon?: Prisma.XOR<Prisma.SalonScalarRelationFilter, Prisma.SalonWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   appointments?: Prisma.AppointmentListRelationFilter
-}, "id" | "userId" | "salonId_email">
+}, "id" | "userId" | "salonId_email" | "salonId_staffCode">
 
 export type StaffOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  staffCode?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -334,6 +356,7 @@ export type StaffOrderByWithAggregationInput = {
   workingFrom?: Prisma.SortOrder
   workingTo?: Prisma.SortOrder
   weekOff?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   salonId?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -351,6 +374,7 @@ export type StaffScalarWhereWithAggregatesInput = {
   OR?: Prisma.StaffScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StaffScalarWhereWithAggregatesInput | Prisma.StaffScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Staff"> | string
+  staffCode?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   email?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
@@ -358,6 +382,7 @@ export type StaffScalarWhereWithAggregatesInput = {
   workingFrom?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   workingTo?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   weekOff?: Prisma.StringWithAggregatesFilter<"Staff"> | string
+  joiningDate?: Prisma.DateTimeWithAggregatesFilter<"Staff"> | Date | string
   status?: Prisma.BoolWithAggregatesFilter<"Staff"> | boolean
   salonId?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
@@ -369,6 +394,7 @@ export type StaffScalarWhereWithAggregatesInput = {
 
 export type StaffCreateInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -376,6 +402,7 @@ export type StaffCreateInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -390,6 +417,7 @@ export type StaffCreateInput = {
 
 export type StaffUncheckedCreateInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -397,6 +425,7 @@ export type StaffUncheckedCreateInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -411,6 +440,7 @@ export type StaffUncheckedCreateInput = {
 
 export type StaffUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -418,6 +448,7 @@ export type StaffUpdateInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,6 +463,7 @@ export type StaffUpdateInput = {
 
 export type StaffUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -439,6 +471,7 @@ export type StaffUncheckedUpdateInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -453,6 +486,7 @@ export type StaffUncheckedUpdateInput = {
 
 export type StaffCreateManyInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -460,6 +494,7 @@ export type StaffCreateManyInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -471,6 +506,7 @@ export type StaffCreateManyInput = {
 
 export type StaffUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -478,6 +514,7 @@ export type StaffUpdateManyMutationInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -485,6 +522,7 @@ export type StaffUpdateManyMutationInput = {
 
 export type StaffUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -492,6 +530,7 @@ export type StaffUncheckedUpdateManyInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -521,8 +560,14 @@ export type StaffSalonIdEmailCompoundUniqueInput = {
   email: string
 }
 
+export type StaffSalonIdStaffCodeCompoundUniqueInput = {
+  salonId: string
+  staffCode: string
+}
+
 export type StaffCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  staffCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -530,6 +575,7 @@ export type StaffCountOrderByAggregateInput = {
   workingFrom?: Prisma.SortOrder
   workingTo?: Prisma.SortOrder
   weekOff?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   salonId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -541,6 +587,7 @@ export type StaffCountOrderByAggregateInput = {
 
 export type StaffMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  staffCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -548,6 +595,7 @@ export type StaffMaxOrderByAggregateInput = {
   workingFrom?: Prisma.SortOrder
   workingTo?: Prisma.SortOrder
   weekOff?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   salonId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -559,6 +607,7 @@ export type StaffMaxOrderByAggregateInput = {
 
 export type StaffMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  staffCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -566,6 +615,7 @@ export type StaffMinOrderByAggregateInput = {
   workingFrom?: Prisma.SortOrder
   workingTo?: Prisma.SortOrder
   weekOff?: Prisma.SortOrder
+  joiningDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   salonId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -790,6 +840,7 @@ export type StaffUpdateOneWithoutSalesNestedInput = {
 
 export type StaffCreateWithoutSalonInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -797,6 +848,7 @@ export type StaffCreateWithoutSalonInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -810,6 +862,7 @@ export type StaffCreateWithoutSalonInput = {
 
 export type StaffUncheckedCreateWithoutSalonInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -817,6 +870,7 @@ export type StaffUncheckedCreateWithoutSalonInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   userId?: string | null
   reportingManagerId?: string | null
@@ -859,6 +913,7 @@ export type StaffScalarWhereInput = {
   OR?: Prisma.StaffScalarWhereInput[]
   NOT?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
   id?: Prisma.StringFilter<"Staff"> | string
+  staffCode?: Prisma.StringNullableFilter<"Staff"> | string | null
   name?: Prisma.StringFilter<"Staff"> | string
   email?: Prisma.StringFilter<"Staff"> | string
   phone?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -866,6 +921,7 @@ export type StaffScalarWhereInput = {
   workingFrom?: Prisma.StringFilter<"Staff"> | string
   workingTo?: Prisma.StringFilter<"Staff"> | string
   weekOff?: Prisma.StringFilter<"Staff"> | string
+  joiningDate?: Prisma.DateTimeFilter<"Staff"> | Date | string
   status?: Prisma.BoolFilter<"Staff"> | boolean
   salonId?: Prisma.StringFilter<"Staff"> | string
   userId?: Prisma.StringNullableFilter<"Staff"> | string | null
@@ -877,6 +933,7 @@ export type StaffScalarWhereInput = {
 
 export type StaffCreateWithoutUserInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -884,6 +941,7 @@ export type StaffCreateWithoutUserInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -897,6 +955,7 @@ export type StaffCreateWithoutUserInput = {
 
 export type StaffUncheckedCreateWithoutUserInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -904,6 +963,7 @@ export type StaffUncheckedCreateWithoutUserInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   reportingManagerId?: string | null
@@ -933,6 +993,7 @@ export type StaffUpdateToOneWithWhereWithoutUserInput = {
 
 export type StaffUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -940,6 +1001,7 @@ export type StaffUpdateWithoutUserInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -953,6 +1015,7 @@ export type StaffUpdateWithoutUserInput = {
 
 export type StaffUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -960,6 +1023,7 @@ export type StaffUncheckedUpdateWithoutUserInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   reportingManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -973,6 +1037,7 @@ export type StaffUncheckedUpdateWithoutUserInput = {
 
 export type StaffCreateWithoutBranchInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -980,6 +1045,7 @@ export type StaffCreateWithoutBranchInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -993,6 +1059,7 @@ export type StaffCreateWithoutBranchInput = {
 
 export type StaffUncheckedCreateWithoutBranchInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1000,6 +1067,7 @@ export type StaffUncheckedCreateWithoutBranchInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -1039,6 +1107,7 @@ export type StaffUpdateManyWithWhereWithoutBranchInput = {
 
 export type StaffCreateWithoutReporteesInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1046,6 +1115,7 @@ export type StaffCreateWithoutReporteesInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1059,6 +1129,7 @@ export type StaffCreateWithoutReporteesInput = {
 
 export type StaffUncheckedCreateWithoutReporteesInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1066,6 +1137,7 @@ export type StaffUncheckedCreateWithoutReporteesInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -1084,6 +1156,7 @@ export type StaffCreateOrConnectWithoutReporteesInput = {
 
 export type StaffCreateWithoutReportingManagerInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1091,6 +1164,7 @@ export type StaffCreateWithoutReportingManagerInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1104,6 +1178,7 @@ export type StaffCreateWithoutReportingManagerInput = {
 
 export type StaffUncheckedCreateWithoutReportingManagerInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1111,6 +1186,7 @@ export type StaffUncheckedCreateWithoutReportingManagerInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -1145,6 +1221,7 @@ export type StaffUpdateToOneWithWhereWithoutReporteesInput = {
 
 export type StaffUpdateWithoutReporteesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1152,6 +1229,7 @@ export type StaffUpdateWithoutReporteesInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1165,6 +1243,7 @@ export type StaffUpdateWithoutReporteesInput = {
 
 export type StaffUncheckedUpdateWithoutReporteesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1172,6 +1251,7 @@ export type StaffUncheckedUpdateWithoutReporteesInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1201,6 +1281,7 @@ export type StaffUpdateManyWithWhereWithoutReportingManagerInput = {
 
 export type StaffCreateWithoutAppointmentsInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1208,6 +1289,7 @@ export type StaffCreateWithoutAppointmentsInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1221,6 +1303,7 @@ export type StaffCreateWithoutAppointmentsInput = {
 
 export type StaffUncheckedCreateWithoutAppointmentsInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1228,6 +1311,7 @@ export type StaffUncheckedCreateWithoutAppointmentsInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -1257,6 +1341,7 @@ export type StaffUpdateToOneWithWhereWithoutAppointmentsInput = {
 
 export type StaffUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1264,6 +1349,7 @@ export type StaffUpdateWithoutAppointmentsInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1277,6 +1363,7 @@ export type StaffUpdateWithoutAppointmentsInput = {
 
 export type StaffUncheckedUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1284,6 +1371,7 @@ export type StaffUncheckedUpdateWithoutAppointmentsInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1297,6 +1385,7 @@ export type StaffUncheckedUpdateWithoutAppointmentsInput = {
 
 export type StaffCreateWithoutSalesInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1304,6 +1393,7 @@ export type StaffCreateWithoutSalesInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1317,6 +1407,7 @@ export type StaffCreateWithoutSalesInput = {
 
 export type StaffUncheckedCreateWithoutSalesInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1324,6 +1415,7 @@ export type StaffUncheckedCreateWithoutSalesInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -1353,6 +1445,7 @@ export type StaffUpdateToOneWithWhereWithoutSalesInput = {
 
 export type StaffUpdateWithoutSalesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1360,6 +1453,7 @@ export type StaffUpdateWithoutSalesInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1373,6 +1467,7 @@ export type StaffUpdateWithoutSalesInput = {
 
 export type StaffUncheckedUpdateWithoutSalesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1380,6 +1475,7 @@ export type StaffUncheckedUpdateWithoutSalesInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1393,6 +1489,7 @@ export type StaffUncheckedUpdateWithoutSalesInput = {
 
 export type StaffCreateManySalonInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1400,6 +1497,7 @@ export type StaffCreateManySalonInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   userId?: string | null
   reportingManagerId?: string | null
@@ -1410,6 +1508,7 @@ export type StaffCreateManySalonInput = {
 
 export type StaffUpdateWithoutSalonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1417,6 +1516,7 @@ export type StaffUpdateWithoutSalonInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1430,6 +1530,7 @@ export type StaffUpdateWithoutSalonInput = {
 
 export type StaffUncheckedUpdateWithoutSalonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1437,6 +1538,7 @@ export type StaffUncheckedUpdateWithoutSalonInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reportingManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1450,6 +1552,7 @@ export type StaffUncheckedUpdateWithoutSalonInput = {
 
 export type StaffUncheckedUpdateManyWithoutSalonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1457,6 +1560,7 @@ export type StaffUncheckedUpdateManyWithoutSalonInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reportingManagerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1467,6 +1571,7 @@ export type StaffUncheckedUpdateManyWithoutSalonInput = {
 
 export type StaffCreateManyBranchInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1474,6 +1579,7 @@ export type StaffCreateManyBranchInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -1484,6 +1590,7 @@ export type StaffCreateManyBranchInput = {
 
 export type StaffUpdateWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1491,6 +1598,7 @@ export type StaffUpdateWithoutBranchInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1504,6 +1612,7 @@ export type StaffUpdateWithoutBranchInput = {
 
 export type StaffUncheckedUpdateWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1511,6 +1620,7 @@ export type StaffUncheckedUpdateWithoutBranchInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1524,6 +1634,7 @@ export type StaffUncheckedUpdateWithoutBranchInput = {
 
 export type StaffUncheckedUpdateManyWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1531,6 +1642,7 @@ export type StaffUncheckedUpdateManyWithoutBranchInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1541,6 +1653,7 @@ export type StaffUncheckedUpdateManyWithoutBranchInput = {
 
 export type StaffCreateManyReportingManagerInput = {
   id?: string
+  staffCode?: string | null
   name: string
   email: string
   phone?: string | null
@@ -1548,6 +1661,7 @@ export type StaffCreateManyReportingManagerInput = {
   workingFrom: string
   workingTo: string
   weekOff: string
+  joiningDate?: Date | string
   status?: boolean
   salonId: string
   userId?: string | null
@@ -1558,6 +1672,7 @@ export type StaffCreateManyReportingManagerInput = {
 
 export type StaffUpdateWithoutReportingManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1565,6 +1680,7 @@ export type StaffUpdateWithoutReportingManagerInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1578,6 +1694,7 @@ export type StaffUpdateWithoutReportingManagerInput = {
 
 export type StaffUncheckedUpdateWithoutReportingManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1585,6 +1702,7 @@ export type StaffUncheckedUpdateWithoutReportingManagerInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1598,6 +1716,7 @@ export type StaffUncheckedUpdateWithoutReportingManagerInput = {
 
 export type StaffUncheckedUpdateManyWithoutReportingManagerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  staffCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1605,6 +1724,7 @@ export type StaffUncheckedUpdateManyWithoutReportingManagerInput = {
   workingFrom?: Prisma.StringFieldUpdateOperationsInput | string
   workingTo?: Prisma.StringFieldUpdateOperationsInput | string
   weekOff?: Prisma.StringFieldUpdateOperationsInput | string
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.BoolFieldUpdateOperationsInput | boolean
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1664,6 +1784,7 @@ export type StaffCountOutputTypeCountAppointmentsArgs<ExtArgs extends runtime.Ty
 
 export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  staffCode?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
@@ -1671,6 +1792,7 @@ export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   workingFrom?: boolean
   workingTo?: boolean
   weekOff?: boolean
+  joiningDate?: boolean
   status?: boolean
   salonId?: boolean
   userId?: boolean
@@ -1690,6 +1812,7 @@ export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 
 export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  staffCode?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
@@ -1697,6 +1820,7 @@ export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   workingFrom?: boolean
   workingTo?: boolean
   weekOff?: boolean
+  joiningDate?: boolean
   status?: boolean
   salonId?: boolean
   userId?: boolean
@@ -1712,6 +1836,7 @@ export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  staffCode?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
@@ -1719,6 +1844,7 @@ export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   workingFrom?: boolean
   workingTo?: boolean
   weekOff?: boolean
+  joiningDate?: boolean
   status?: boolean
   salonId?: boolean
   userId?: boolean
@@ -1734,6 +1860,7 @@ export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type StaffSelectScalar = {
   id?: boolean
+  staffCode?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
@@ -1741,6 +1868,7 @@ export type StaffSelectScalar = {
   workingFrom?: boolean
   workingTo?: boolean
   weekOff?: boolean
+  joiningDate?: boolean
   status?: boolean
   salonId?: boolean
   userId?: boolean
@@ -1750,7 +1878,7 @@ export type StaffSelectScalar = {
   branchId?: boolean
 }
 
-export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "jobRole" | "workingFrom" | "workingTo" | "weekOff" | "status" | "salonId" | "userId" | "reportingManagerId" | "createdAt" | "updatedAt" | "branchId", ExtArgs["result"]["staff"]>
+export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffCode" | "name" | "email" | "phone" | "jobRole" | "workingFrom" | "workingTo" | "weekOff" | "joiningDate" | "status" | "salonId" | "userId" | "reportingManagerId" | "createdAt" | "updatedAt" | "branchId", ExtArgs["result"]["staff"]>
 export type StaffInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reportingManager?: boolean | Prisma.Staff$reportingManagerArgs<ExtArgs>
   reportees?: boolean | Prisma.Staff$reporteesArgs<ExtArgs>
@@ -1787,6 +1915,7 @@ export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    staffCode: string | null
     name: string
     email: string
     phone: string | null
@@ -1794,6 +1923,7 @@ export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     workingFrom: string
     workingTo: string
     weekOff: string
+    joiningDate: Date
     status: boolean
     salonId: string
     userId: string | null
@@ -2232,6 +2362,7 @@ export interface Prisma__StaffClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface StaffFieldRefs {
   readonly id: Prisma.FieldRef<"Staff", 'String'>
+  readonly staffCode: Prisma.FieldRef<"Staff", 'String'>
   readonly name: Prisma.FieldRef<"Staff", 'String'>
   readonly email: Prisma.FieldRef<"Staff", 'String'>
   readonly phone: Prisma.FieldRef<"Staff", 'String'>
@@ -2239,6 +2370,7 @@ export interface StaffFieldRefs {
   readonly workingFrom: Prisma.FieldRef<"Staff", 'String'>
   readonly workingTo: Prisma.FieldRef<"Staff", 'String'>
   readonly weekOff: Prisma.FieldRef<"Staff", 'String'>
+  readonly joiningDate: Prisma.FieldRef<"Staff", 'DateTime'>
   readonly status: Prisma.FieldRef<"Staff", 'Boolean'>
   readonly salonId: Prisma.FieldRef<"Staff", 'String'>
   readonly userId: Prisma.FieldRef<"Staff", 'String'>

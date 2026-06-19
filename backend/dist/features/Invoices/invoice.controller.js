@@ -1,6 +1,7 @@
 import {} from "express";
 import { InvoiceModel } from "./invoice.model.js";
 import { AppointmentModel } from "../appointments/appointment.model.js";
+import { CustomerModel } from "../customers/customer.model.js";
 const INVOICE_TYPES = ["GST_INVOICE", "BILL_OF_SUPPLY"];
 const INVOICE_STATUSES = ["DRAFT", "ISSUED", "CANCELLED"];
 const PAYMENT_STATUSES = ["UNPAID", "PARTIALLY_PAID", "PAID"];
@@ -151,6 +152,14 @@ export const createInvoiceFromAppointment = async (req, res) => {
                         (Number(item.price) * finalTaxPercent) / 100).toFixed(2))
                     : Number(item.price),
             })),
+        });
+        await CustomerModel.increaseOutstandingWithTransaction({
+            customerId: invoice.customerId,
+            salonId: invoice.salonId,
+            invoiceId: invoice.id,
+            billNo: invoice.invoiceCode,
+            amount: Number(invoice.totalAmount),
+            narration: `Invoice generated: ${invoice.invoiceCode}`,
         });
         return res.status(201).json({
             success: true,

@@ -58,10 +58,11 @@ export const CustomerModel = {
     });
   },
 
-  findBySalon: async (salonId: string) => {
+  findBySalon: async (salonId: string, branchId?: string) => {
     return prisma.customer.findMany({
       where: {
         salonId,
+        ...(branchId ? { branchId } : {}),
       },
       include: {
         branch: {
@@ -104,11 +105,16 @@ export const CustomerModel = {
     });
   },
 
-  findByIdAndSalon: async (id: string, salonId: string) => {
+  findByIdAndSalon: async (
+    id: string,
+    salonId: string,
+    branchId?: string
+  ) => {
     return prisma.customer.findFirst({
       where: {
         id,
         salonId,
+        ...(branchId ? { branchId } : {}),
       },
       include: {
         branch: {
@@ -192,7 +198,7 @@ export const CustomerModel = {
         salonId,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
     });
   },
@@ -258,4 +264,89 @@ export const CustomerModel = {
       },
     });
   },
+  increaseOutstandingWithTransaction: async (data: {
+  customerId: string;
+  salonId: string;
+  invoiceId: string;
+  billNo: string;
+  amount: number;
+  narration?: string;
+}) => {
+  return prisma.$transaction(async (tx) => {
+    const customer = await tx.customer.update({
+      where: {
+        id: data.customerId,
+      },
+      data: {
+        outstandingAmount: {
+          increment: data.amount,
+        },
+      },
+    });
+
+    const transaction = await tx.customerTransaction.create({
+      data: {
+        customerId: data.customerId,
+        salonId: data.salonId,
+        invoiceId: data.invoiceId,
+        billNo: data.billNo,
+        narration: data.narration || "Invoice generated",
+        type: "INVOICE",
+        debit: data.amount,
+        credit: 0,
+        balanceAfter: Number(customer.outstandingAmount),
+        status: "COMPLETE",
+      },
+    });
+
+    return {
+      customer,
+      transaction,
+    };
+  });
+},
+
+decreaseOutstandingWithTransaction: async (data: {
+  customerId: string;
+  salonId: string;
+  invoiceId: string;
+  paymentId: string;
+  billNo: string;
+  amount: number;
+  narration?: string;
+}) => {
+  return prisma.$transaction(async (tx) => {
+    const customer = await tx.customer.update({
+      where: {
+        id: data.customerId,
+      },
+      data: {
+        outstandingAmount: {
+          decrement: data.amount,
+        },
+      },
+    });
+
+    const transaction = await tx.customerTransaction.create({
+      data: {
+        customerId: data.customerId,
+        salonId: data.salonId,
+        invoiceId: data.invoiceId,
+        paymentId: data.paymentId,
+        billNo: data.billNo,
+        narration: data.narration || "Payment received",
+        type: "PAYMENT",
+        debit: 0,
+        credit: data.amount,
+        balanceAfter: Number(customer.outstandingAmount),
+        status: "COMPLETE",
+      },
+    });
+
+    return {
+      customer,
+      transaction,
+    };
+  });
+},
 };

@@ -12,6 +12,11 @@ const getExistingBranchByAccess = async (req, branchId) => {
     if (!salonId) {
         return null;
     }
+    if (req.user?.role === "RECEPTIONIST" &&
+        req.user.branchId &&
+        branchId !== req.user.branchId) {
+        return null;
+    }
     return BranchModel.findByIdAndSalon(branchId, salonId);
 };
 export const createBranch = async (req, res) => {
@@ -78,6 +83,14 @@ export const getBranches = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "Salon ID is missing",
+            });
+        }
+        if (req.user.role === "RECEPTIONIST" && req.user.branchId) {
+            const branch = await BranchModel.findByIdAndSalon(req.user.branchId, req.user.salonId);
+            return res.status(200).json({
+                success: true,
+                message: "Branches fetched successfully",
+                data: branch ? [branch] : [],
             });
         }
         const branches = await BranchModel.findBySalon(req.user.salonId);

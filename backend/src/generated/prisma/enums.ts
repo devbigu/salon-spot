@@ -31,6 +31,7 @@ export const Role = {
   SUPER_ADMIN: 'SUPER_ADMIN',
   SALON_ADMIN: 'SALON_ADMIN',
   BRANCH_MANAGER: 'BRANCH_MANAGER',
+  RECEPTIONIST: 'RECEPTIONIST',
   STAFF: 'STAFF'
 } as const
 
@@ -117,3 +118,15 @@ export const InvoiceStatus = {
 } as const
 
 export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]
+
+
+export const CustomerTransactionType = {
+  INVOICE: 'INVOICE',
+  PAYMENT: 'PAYMENT',
+  WALLET_ADD: 'WALLET_ADD',
+  WALLET_USED: 'WALLET_USED',
+  REFUND: 'REFUND',
+  ADJUSTMENT: 'ADJUSTMENT'
+} as const
+
+export type CustomerTransactionType = (typeof CustomerTransactionType)[keyof typeof CustomerTransactionType]

@@ -16,9 +16,9 @@ router.use(authenticate);
 
 router.post("/", requireRole("SUPER_ADMIN", "SALON_ADMIN"), createStaff);
 
-router.get("/", requireRole("SUPER_ADMIN", "SALON_ADMIN"), getStaff);
+router.get("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST"), getStaff);
 
-router.get("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN"), getStaffById);
+router.get("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST"), getStaffById);
 
 router.put("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN"), updateStaff);
 

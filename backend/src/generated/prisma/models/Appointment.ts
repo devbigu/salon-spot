@@ -43,6 +43,7 @@ export type AppointmentMinAggregateOutputType = {
   branchId: string | null
   customerId: string | null
   staffId: string | null
+  createdById: string | null
   startTime: Date | null
   endTime: Date | null
   totalDurationMinutes: number | null
@@ -61,6 +62,7 @@ export type AppointmentMaxAggregateOutputType = {
   branchId: string | null
   customerId: string | null
   staffId: string | null
+  createdById: string | null
   startTime: Date | null
   endTime: Date | null
   totalDurationMinutes: number | null
@@ -79,6 +81,7 @@ export type AppointmentCountAggregateOutputType = {
   branchId: number
   customerId: number
   staffId: number
+  createdById: number
   startTime: number
   endTime: number
   totalDurationMinutes: number
@@ -109,6 +112,7 @@ export type AppointmentMinAggregateInputType = {
   branchId?: true
   customerId?: true
   staffId?: true
+  createdById?: true
   startTime?: true
   endTime?: true
   totalDurationMinutes?: true
@@ -127,6 +131,7 @@ export type AppointmentMaxAggregateInputType = {
   branchId?: true
   customerId?: true
   staffId?: true
+  createdById?: true
   startTime?: true
   endTime?: true
   totalDurationMinutes?: true
@@ -145,6 +150,7 @@ export type AppointmentCountAggregateInputType = {
   branchId?: true
   customerId?: true
   staffId?: true
+  createdById?: true
   startTime?: true
   endTime?: true
   totalDurationMinutes?: true
@@ -250,6 +256,7 @@ export type AppointmentGroupByOutputType = {
   branchId: string | null
   customerId: string
   staffId: string
+  createdById: string | null
   startTime: Date
   endTime: Date
   totalDurationMinutes: number
@@ -291,6 +298,7 @@ export type AppointmentWhereInput = {
   branchId?: Prisma.StringNullableFilter<"Appointment"> | string | null
   customerId?: Prisma.StringFilter<"Appointment"> | string
   staffId?: Prisma.StringFilter<"Appointment"> | string
+  createdById?: Prisma.StringNullableFilter<"Appointment"> | string | null
   startTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   totalDurationMinutes?: Prisma.IntFilter<"Appointment"> | number
@@ -304,6 +312,7 @@ export type AppointmentWhereInput = {
   branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   staff?: Prisma.XOR<Prisma.StaffScalarRelationFilter, Prisma.StaffWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   services?: Prisma.AppointmentServiceListRelationFilter
   invoice?: Prisma.XOR<Prisma.InvoiceNullableScalarRelationFilter, Prisma.InvoiceWhereInput> | null
   statusHistory?: Prisma.AppointmentStatusHistoryListRelationFilter
@@ -316,6 +325,7 @@ export type AppointmentOrderByWithRelationInput = {
   branchId?: Prisma.SortOrderInput | Prisma.SortOrder
   customerId?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   totalDurationMinutes?: Prisma.SortOrder
@@ -329,6 +339,7 @@ export type AppointmentOrderByWithRelationInput = {
   branch?: Prisma.BranchOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
   staff?: Prisma.StaffOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
   services?: Prisma.AppointmentServiceOrderByRelationAggregateInput
   invoice?: Prisma.InvoiceOrderByWithRelationInput
   statusHistory?: Prisma.AppointmentStatusHistoryOrderByRelationAggregateInput
@@ -345,6 +356,7 @@ export type AppointmentWhereUniqueInput = Prisma.AtLeast<{
   branchId?: Prisma.StringNullableFilter<"Appointment"> | string | null
   customerId?: Prisma.StringFilter<"Appointment"> | string
   staffId?: Prisma.StringFilter<"Appointment"> | string
+  createdById?: Prisma.StringNullableFilter<"Appointment"> | string | null
   startTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   totalDurationMinutes?: Prisma.IntFilter<"Appointment"> | number
@@ -358,6 +370,7 @@ export type AppointmentWhereUniqueInput = Prisma.AtLeast<{
   branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   staff?: Prisma.XOR<Prisma.StaffScalarRelationFilter, Prisma.StaffWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   services?: Prisma.AppointmentServiceListRelationFilter
   invoice?: Prisma.XOR<Prisma.InvoiceNullableScalarRelationFilter, Prisma.InvoiceWhereInput> | null
   statusHistory?: Prisma.AppointmentStatusHistoryListRelationFilter
@@ -370,6 +383,7 @@ export type AppointmentOrderByWithAggregationInput = {
   branchId?: Prisma.SortOrderInput | Prisma.SortOrder
   customerId?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   totalDurationMinutes?: Prisma.SortOrder
@@ -396,6 +410,7 @@ export type AppointmentScalarWhereWithAggregatesInput = {
   branchId?: Prisma.StringNullableWithAggregatesFilter<"Appointment"> | string | null
   customerId?: Prisma.StringWithAggregatesFilter<"Appointment"> | string
   staffId?: Prisma.StringWithAggregatesFilter<"Appointment"> | string
+  createdById?: Prisma.StringNullableWithAggregatesFilter<"Appointment"> | string | null
   startTime?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   totalDurationMinutes?: Prisma.IntWithAggregatesFilter<"Appointment"> | number
@@ -423,6 +438,7 @@ export type AppointmentCreateInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
   customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
   staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
   invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
   statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
@@ -435,6 +451,7 @@ export type AppointmentUncheckedCreateInput = {
   branchId?: string | null
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -465,6 +482,7 @@ export type AppointmentUpdateInput = {
   branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
   staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
   invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
   statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
@@ -477,6 +495,7 @@ export type AppointmentUncheckedUpdateInput = {
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -498,6 +517,7 @@ export type AppointmentCreateManyInput = {
   branchId?: string | null
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -530,6 +550,7 @@ export type AppointmentUncheckedUpdateManyInput = {
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -563,6 +584,7 @@ export type AppointmentCountOrderByAggregateInput = {
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   totalDurationMinutes?: Prisma.SortOrder
@@ -586,6 +608,7 @@ export type AppointmentMaxOrderByAggregateInput = {
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   totalDurationMinutes?: Prisma.SortOrder
@@ -604,6 +627,7 @@ export type AppointmentMinOrderByAggregateInput = {
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   totalDurationMinutes?: Prisma.SortOrder
@@ -669,6 +693,48 @@ export type AppointmentUncheckedUpdateManyWithoutSalonNestedInput = {
   connect?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
   update?: Prisma.AppointmentUpdateWithWhereUniqueWithoutSalonInput | Prisma.AppointmentUpdateWithWhereUniqueWithoutSalonInput[]
   updateMany?: Prisma.AppointmentUpdateManyWithWhereWithoutSalonInput | Prisma.AppointmentUpdateManyWithWhereWithoutSalonInput[]
+  deleteMany?: Prisma.AppointmentScalarWhereInput | Prisma.AppointmentScalarWhereInput[]
+}
+
+export type AppointmentCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.AppointmentCreateWithoutCreatedByInput, Prisma.AppointmentUncheckedCreateWithoutCreatedByInput> | Prisma.AppointmentCreateWithoutCreatedByInput[] | Prisma.AppointmentUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.AppointmentCreateOrConnectWithoutCreatedByInput | Prisma.AppointmentCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.AppointmentCreateManyCreatedByInputEnvelope
+  connect?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+}
+
+export type AppointmentUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.AppointmentCreateWithoutCreatedByInput, Prisma.AppointmentUncheckedCreateWithoutCreatedByInput> | Prisma.AppointmentCreateWithoutCreatedByInput[] | Prisma.AppointmentUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.AppointmentCreateOrConnectWithoutCreatedByInput | Prisma.AppointmentCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.AppointmentCreateManyCreatedByInputEnvelope
+  connect?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+}
+
+export type AppointmentUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.AppointmentCreateWithoutCreatedByInput, Prisma.AppointmentUncheckedCreateWithoutCreatedByInput> | Prisma.AppointmentCreateWithoutCreatedByInput[] | Prisma.AppointmentUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.AppointmentCreateOrConnectWithoutCreatedByInput | Prisma.AppointmentCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.AppointmentUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.AppointmentUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.AppointmentCreateManyCreatedByInputEnvelope
+  set?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  disconnect?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  delete?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  connect?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  update?: Prisma.AppointmentUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.AppointmentUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.AppointmentUpdateManyWithWhereWithoutCreatedByInput | Prisma.AppointmentUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.AppointmentScalarWhereInput | Prisma.AppointmentScalarWhereInput[]
+}
+
+export type AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.AppointmentCreateWithoutCreatedByInput, Prisma.AppointmentUncheckedCreateWithoutCreatedByInput> | Prisma.AppointmentCreateWithoutCreatedByInput[] | Prisma.AppointmentUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.AppointmentCreateOrConnectWithoutCreatedByInput | Prisma.AppointmentCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.AppointmentUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.AppointmentUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.AppointmentCreateManyCreatedByInputEnvelope
+  set?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  disconnect?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  delete?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  connect?: Prisma.AppointmentWhereUniqueInput | Prisma.AppointmentWhereUniqueInput[]
+  update?: Prisma.AppointmentUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.AppointmentUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.AppointmentUpdateManyWithWhereWithoutCreatedByInput | Prisma.AppointmentUpdateManyWithWhereWithoutCreatedByInput[]
   deleteMany?: Prisma.AppointmentScalarWhereInput | Prisma.AppointmentScalarWhereInput[]
 }
 
@@ -869,6 +935,7 @@ export type AppointmentCreateWithoutSalonInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
   customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
   staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
   invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
   statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
@@ -880,6 +947,7 @@ export type AppointmentUncheckedCreateWithoutSalonInput = {
   branchId?: string | null
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -930,6 +998,7 @@ export type AppointmentScalarWhereInput = {
   branchId?: Prisma.StringNullableFilter<"Appointment"> | string | null
   customerId?: Prisma.StringFilter<"Appointment"> | string
   staffId?: Prisma.StringFilter<"Appointment"> | string
+  createdById?: Prisma.StringNullableFilter<"Appointment"> | string | null
   startTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   endTime?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   totalDurationMinutes?: Prisma.IntFilter<"Appointment"> | number
@@ -939,6 +1008,74 @@ export type AppointmentScalarWhereInput = {
   internalNote?: Prisma.StringNullableFilter<"Appointment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
+}
+
+export type AppointmentCreateWithoutCreatedByInput = {
+  id?: string
+  appointmentCode: string
+  startTime: Date | string
+  endTime: Date | string
+  totalDurationMinutes?: number
+  estimatedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.AppointmentStatus
+  bookingNote?: string | null
+  internalNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  salon: Prisma.SalonCreateNestedOneWithoutAppointmentsInput
+  branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
+  customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
+  staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
+  invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
+  statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
+}
+
+export type AppointmentUncheckedCreateWithoutCreatedByInput = {
+  id?: string
+  appointmentCode: string
+  salonId: string
+  branchId?: string | null
+  customerId: string
+  staffId: string
+  startTime: Date | string
+  endTime: Date | string
+  totalDurationMinutes?: number
+  estimatedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.AppointmentStatus
+  bookingNote?: string | null
+  internalNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  services?: Prisma.AppointmentServiceUncheckedCreateNestedManyWithoutAppointmentInput
+  invoice?: Prisma.InvoiceUncheckedCreateNestedOneWithoutAppointmentInput
+  statusHistory?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutAppointmentInput
+}
+
+export type AppointmentCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.AppointmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.AppointmentCreateWithoutCreatedByInput, Prisma.AppointmentUncheckedCreateWithoutCreatedByInput>
+}
+
+export type AppointmentCreateManyCreatedByInputEnvelope = {
+  data: Prisma.AppointmentCreateManyCreatedByInput | Prisma.AppointmentCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type AppointmentUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.AppointmentWhereUniqueInput
+  update: Prisma.XOR<Prisma.AppointmentUpdateWithoutCreatedByInput, Prisma.AppointmentUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.AppointmentCreateWithoutCreatedByInput, Prisma.AppointmentUncheckedCreateWithoutCreatedByInput>
+}
+
+export type AppointmentUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.AppointmentWhereUniqueInput
+  data: Prisma.XOR<Prisma.AppointmentUpdateWithoutCreatedByInput, Prisma.AppointmentUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type AppointmentUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.AppointmentScalarWhereInput
+  data: Prisma.XOR<Prisma.AppointmentUpdateManyMutationInput, Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByInput>
 }
 
 export type AppointmentCreateWithoutCustomerInput = {
@@ -956,6 +1093,7 @@ export type AppointmentCreateWithoutCustomerInput = {
   salon: Prisma.SalonCreateNestedOneWithoutAppointmentsInput
   branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
   staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
   invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
   statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
@@ -967,6 +1105,7 @@ export type AppointmentUncheckedCreateWithoutCustomerInput = {
   salonId: string
   branchId?: string | null
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1022,6 +1161,7 @@ export type AppointmentCreateWithoutBranchInput = {
   salon: Prisma.SalonCreateNestedOneWithoutAppointmentsInput
   customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
   staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
   invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
   statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
@@ -1033,6 +1173,7 @@ export type AppointmentUncheckedCreateWithoutBranchInput = {
   salonId: string
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1088,6 +1229,7 @@ export type AppointmentCreateWithoutStaffInput = {
   salon: Prisma.SalonCreateNestedOneWithoutAppointmentsInput
   branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
   customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
   invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
   statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
@@ -1099,6 +1241,7 @@ export type AppointmentUncheckedCreateWithoutStaffInput = {
   salonId: string
   branchId?: string | null
   customerId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1155,6 +1298,7 @@ export type AppointmentCreateWithoutStatusHistoryInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
   customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
   staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
   invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
 }
@@ -1166,6 +1310,7 @@ export type AppointmentUncheckedCreateWithoutStatusHistoryInput = {
   branchId?: string | null
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1211,6 +1356,7 @@ export type AppointmentUpdateWithoutStatusHistoryInput = {
   branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
   staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
   invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
 }
@@ -1222,6 +1368,7 @@ export type AppointmentUncheckedUpdateWithoutStatusHistoryInput = {
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1251,6 +1398,7 @@ export type AppointmentCreateWithoutServicesInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
   customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
   staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   invoice?: Prisma.InvoiceCreateNestedOneWithoutAppointmentInput
   statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
 }
@@ -1262,6 +1410,7 @@ export type AppointmentUncheckedCreateWithoutServicesInput = {
   branchId?: string | null
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1307,6 +1456,7 @@ export type AppointmentUpdateWithoutServicesInput = {
   branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
   staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
   statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
 }
@@ -1318,6 +1468,7 @@ export type AppointmentUncheckedUpdateWithoutServicesInput = {
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1347,6 +1498,7 @@ export type AppointmentCreateWithoutInvoiceInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutAppointmentsInput
   customer: Prisma.CustomerCreateNestedOneWithoutAppointmentsInput
   staff: Prisma.StaffCreateNestedOneWithoutAppointmentsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedAppointmentsInput
   services?: Prisma.AppointmentServiceCreateNestedManyWithoutAppointmentInput
   statusHistory?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutAppointmentInput
 }
@@ -1358,6 +1510,7 @@ export type AppointmentUncheckedCreateWithoutInvoiceInput = {
   branchId?: string | null
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1403,6 +1556,7 @@ export type AppointmentUpdateWithoutInvoiceInput = {
   branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
   staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
   statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
 }
@@ -1414,6 +1568,7 @@ export type AppointmentUncheckedUpdateWithoutInvoiceInput = {
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1433,6 +1588,7 @@ export type AppointmentCreateManySalonInput = {
   branchId?: string | null
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1459,6 +1615,7 @@ export type AppointmentUpdateWithoutSalonInput = {
   branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
   staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
   invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
   statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
@@ -1470,6 +1627,7 @@ export type AppointmentUncheckedUpdateWithoutSalonInput = {
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1490,6 +1648,85 @@ export type AppointmentUncheckedUpdateManyWithoutSalonInput = {
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  bookingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AppointmentCreateManyCreatedByInput = {
+  id?: string
+  appointmentCode: string
+  salonId: string
+  branchId?: string | null
+  customerId: string
+  staffId: string
+  startTime: Date | string
+  endTime: Date | string
+  totalDurationMinutes?: number
+  estimatedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.AppointmentStatus
+  bookingNote?: string | null
+  internalNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AppointmentUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentCode?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  bookingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  salon?: Prisma.SalonUpdateOneRequiredWithoutAppointmentsNestedInput
+  branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
+  staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
+  invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
+  statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
+}
+
+export type AppointmentUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentCode?: Prisma.StringFieldUpdateOperationsInput | string
+  salonId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  estimatedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
+  bookingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  services?: Prisma.AppointmentServiceUncheckedUpdateManyWithoutAppointmentNestedInput
+  invoice?: Prisma.InvoiceUncheckedUpdateOneWithoutAppointmentNestedInput
+  statusHistory?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutAppointmentNestedInput
+}
+
+export type AppointmentUncheckedUpdateManyWithoutCreatedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentCode?: Prisma.StringFieldUpdateOperationsInput | string
+  salonId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  staffId?: Prisma.StringFieldUpdateOperationsInput | string
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1507,6 +1744,7 @@ export type AppointmentCreateManyCustomerInput = {
   salonId: string
   branchId?: string | null
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1533,6 +1771,7 @@ export type AppointmentUpdateWithoutCustomerInput = {
   salon?: Prisma.SalonUpdateOneRequiredWithoutAppointmentsNestedInput
   branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
   staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
   invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
   statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
@@ -1544,6 +1783,7 @@ export type AppointmentUncheckedUpdateWithoutCustomerInput = {
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1564,6 +1804,7 @@ export type AppointmentUncheckedUpdateManyWithoutCustomerInput = {
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1581,6 +1822,7 @@ export type AppointmentCreateManyBranchInput = {
   salonId: string
   customerId: string
   staffId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1607,6 +1849,7 @@ export type AppointmentUpdateWithoutBranchInput = {
   salon?: Prisma.SalonUpdateOneRequiredWithoutAppointmentsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
   staff?: Prisma.StaffUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
   invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
   statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
@@ -1618,6 +1861,7 @@ export type AppointmentUncheckedUpdateWithoutBranchInput = {
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1638,6 +1882,7 @@ export type AppointmentUncheckedUpdateManyWithoutBranchInput = {
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1655,6 +1900,7 @@ export type AppointmentCreateManyStaffInput = {
   salonId: string
   branchId?: string | null
   customerId: string
+  createdById?: string | null
   startTime: Date | string
   endTime: Date | string
   totalDurationMinutes?: number
@@ -1681,6 +1927,7 @@ export type AppointmentUpdateWithoutStaffInput = {
   salon?: Prisma.SalonUpdateOneRequiredWithoutAppointmentsNestedInput
   branch?: Prisma.BranchUpdateOneWithoutAppointmentsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutAppointmentsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedAppointmentsNestedInput
   services?: Prisma.AppointmentServiceUpdateManyWithoutAppointmentNestedInput
   invoice?: Prisma.InvoiceUpdateOneWithoutAppointmentNestedInput
   statusHistory?: Prisma.AppointmentStatusHistoryUpdateManyWithoutAppointmentNestedInput
@@ -1692,6 +1939,7 @@ export type AppointmentUncheckedUpdateWithoutStaffInput = {
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1712,6 +1960,7 @@ export type AppointmentUncheckedUpdateManyWithoutStaffInput = {
   salonId?: Prisma.StringFieldUpdateOperationsInput | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1770,6 +2019,7 @@ export type AppointmentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   branchId?: boolean
   customerId?: boolean
   staffId?: boolean
+  createdById?: boolean
   startTime?: boolean
   endTime?: boolean
   totalDurationMinutes?: boolean
@@ -1783,6 +2033,7 @@ export type AppointmentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   branch?: boolean | Prisma.Appointment$branchArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   staff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Appointment$createdByArgs<ExtArgs>
   services?: boolean | Prisma.Appointment$servicesArgs<ExtArgs>
   invoice?: boolean | Prisma.Appointment$invoiceArgs<ExtArgs>
   statusHistory?: boolean | Prisma.Appointment$statusHistoryArgs<ExtArgs>
@@ -1796,6 +2047,7 @@ export type AppointmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   branchId?: boolean
   customerId?: boolean
   staffId?: boolean
+  createdById?: boolean
   startTime?: boolean
   endTime?: boolean
   totalDurationMinutes?: boolean
@@ -1809,6 +2061,7 @@ export type AppointmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   branch?: boolean | Prisma.Appointment$branchArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   staff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Appointment$createdByArgs<ExtArgs>
 }, ExtArgs["result"]["appointment"]>
 
 export type AppointmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1818,6 +2071,7 @@ export type AppointmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   branchId?: boolean
   customerId?: boolean
   staffId?: boolean
+  createdById?: boolean
   startTime?: boolean
   endTime?: boolean
   totalDurationMinutes?: boolean
@@ -1831,6 +2085,7 @@ export type AppointmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   branch?: boolean | Prisma.Appointment$branchArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   staff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Appointment$createdByArgs<ExtArgs>
 }, ExtArgs["result"]["appointment"]>
 
 export type AppointmentSelectScalar = {
@@ -1840,6 +2095,7 @@ export type AppointmentSelectScalar = {
   branchId?: boolean
   customerId?: boolean
   staffId?: boolean
+  createdById?: boolean
   startTime?: boolean
   endTime?: boolean
   totalDurationMinutes?: boolean
@@ -1851,12 +2107,13 @@ export type AppointmentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AppointmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "appointmentCode" | "salonId" | "branchId" | "customerId" | "staffId" | "startTime" | "endTime" | "totalDurationMinutes" | "estimatedAmount" | "status" | "bookingNote" | "internalNote" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
+export type AppointmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "appointmentCode" | "salonId" | "branchId" | "customerId" | "staffId" | "createdById" | "startTime" | "endTime" | "totalDurationMinutes" | "estimatedAmount" | "status" | "bookingNote" | "internalNote" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
 export type AppointmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   salon?: boolean | Prisma.SalonDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.Appointment$branchArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   staff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Appointment$createdByArgs<ExtArgs>
   services?: boolean | Prisma.Appointment$servicesArgs<ExtArgs>
   invoice?: boolean | Prisma.Appointment$invoiceArgs<ExtArgs>
   statusHistory?: boolean | Prisma.Appointment$statusHistoryArgs<ExtArgs>
@@ -1867,12 +2124,14 @@ export type AppointmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.
   branch?: boolean | Prisma.Appointment$branchArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   staff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Appointment$createdByArgs<ExtArgs>
 }
 export type AppointmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   salon?: boolean | Prisma.SalonDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.Appointment$branchArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   staff?: boolean | Prisma.StaffDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Appointment$createdByArgs<ExtArgs>
 }
 
 export type $AppointmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1882,6 +2141,7 @@ export type $AppointmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     branch: Prisma.$BranchPayload<ExtArgs> | null
     customer: Prisma.$CustomerPayload<ExtArgs>
     staff: Prisma.$StaffPayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
     services: Prisma.$AppointmentServicePayload<ExtArgs>[]
     invoice: Prisma.$InvoicePayload<ExtArgs> | null
     statusHistory: Prisma.$AppointmentStatusHistoryPayload<ExtArgs>[]
@@ -1893,6 +2153,7 @@ export type $AppointmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     branchId: string | null
     customerId: string
     staffId: string
+    createdById: string | null
     startTime: Date
     endTime: Date
     totalDurationMinutes: number
@@ -2300,6 +2561,7 @@ export interface Prisma__AppointmentClient<T, Null = never, ExtArgs extends runt
   branch<T extends Prisma.Appointment$branchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Appointment$branchArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   staff<T extends Prisma.StaffDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StaffDefaultArgs<ExtArgs>>): Prisma.Prisma__StaffClient<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.Appointment$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Appointment$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   services<T extends Prisma.Appointment$servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Appointment$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invoice<T extends Prisma.Appointment$invoiceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Appointment$invoiceArgs<ExtArgs>>): Prisma.Prisma__InvoiceClient<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   statusHistory<T extends Prisma.Appointment$statusHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Appointment$statusHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2338,6 +2600,7 @@ export interface AppointmentFieldRefs {
   readonly branchId: Prisma.FieldRef<"Appointment", 'String'>
   readonly customerId: Prisma.FieldRef<"Appointment", 'String'>
   readonly staffId: Prisma.FieldRef<"Appointment", 'String'>
+  readonly createdById: Prisma.FieldRef<"Appointment", 'String'>
   readonly startTime: Prisma.FieldRef<"Appointment", 'DateTime'>
   readonly endTime: Prisma.FieldRef<"Appointment", 'DateTime'>
   readonly totalDurationMinutes: Prisma.FieldRef<"Appointment", 'Int'>
@@ -2764,6 +3027,25 @@ export type Appointment$branchArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.BranchInclude<ExtArgs> | null
   where?: Prisma.BranchWhereInput
+}
+
+/**
+ * Appointment.createdBy
+ */
+export type Appointment$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

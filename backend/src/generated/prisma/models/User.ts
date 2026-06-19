@@ -224,6 +224,7 @@ export type UserWhereInput = {
   branchId?: Prisma.StringNullableFilter<"User"> | string | null
   branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryListRelationFilter
+  createdAppointments?: Prisma.AppointmentListRelationFilter
   salesCreated?: Prisma.SaleListRelationFilter
   salesEdited?: Prisma.SaleListRelationFilter
   salesDeleted?: Prisma.SaleListRelationFilter
@@ -245,6 +246,7 @@ export type UserOrderByWithRelationInput = {
   branchId?: Prisma.SortOrderInput | Prisma.SortOrder
   branch?: Prisma.BranchOrderByWithRelationInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryOrderByRelationAggregateInput
+  createdAppointments?: Prisma.AppointmentOrderByRelationAggregateInput
   salesCreated?: Prisma.SaleOrderByRelationAggregateInput
   salesEdited?: Prisma.SaleOrderByRelationAggregateInput
   salesDeleted?: Prisma.SaleOrderByRelationAggregateInput
@@ -269,6 +271,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   branchId?: Prisma.StringNullableFilter<"User"> | string | null
   branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryListRelationFilter
+  createdAppointments?: Prisma.AppointmentListRelationFilter
   salesCreated?: Prisma.SaleListRelationFilter
   salesEdited?: Prisma.SaleListRelationFilter
   salesDeleted?: Prisma.SaleListRelationFilter
@@ -320,6 +323,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
@@ -340,6 +344,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   branchId?: string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
@@ -358,6 +363,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
@@ -378,6 +384,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -580,6 +587,22 @@ export type UserUpdateOneWithoutStaffProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStaffProfileInput, Prisma.UserUpdateWithoutStaffProfileInput>, Prisma.UserUncheckedUpdateWithoutStaffProfileInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedAppointmentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedAppointmentsInput, Prisma.UserUncheckedCreateWithoutCreatedAppointmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedAppointmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedAppointmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedAppointmentsInput, Prisma.UserUncheckedCreateWithoutCreatedAppointmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedAppointmentsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedAppointmentsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedAppointmentsInput, Prisma.UserUpdateWithoutCreatedAppointmentsInput>, Prisma.UserUncheckedUpdateWithoutCreatedAppointmentsInput>
+}
+
 export type UserCreateNestedOneWithoutAppointmentStatusChangesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutAppointmentStatusChangesInput, Prisma.UserUncheckedCreateWithoutAppointmentStatusChangesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutAppointmentStatusChangesInput
@@ -671,6 +694,7 @@ export type UserCreateWithoutSalonInput = {
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
@@ -689,6 +713,7 @@ export type UserUncheckedCreateWithoutSalonInput = {
   updatedAt?: Date | string
   branchId?: string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
@@ -748,6 +773,7 @@ export type UserCreateWithoutBranchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
@@ -767,6 +793,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
@@ -811,6 +838,7 @@ export type UserCreateWithoutStaffProfileInput = {
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
@@ -830,6 +858,7 @@ export type UserUncheckedCreateWithoutStaffProfileInput = {
   updatedAt?: Date | string
   branchId?: string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
@@ -863,6 +892,7 @@ export type UserUpdateWithoutStaffProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
@@ -882,10 +912,103 @@ export type UserUncheckedUpdateWithoutStaffProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
   salePaymentsReceived?: Prisma.SalePaymentUncheckedUpdateManyWithoutReceivedByNestedInput
+}
+
+export type UserCreateWithoutCreatedAppointmentsInput = {
+  id?: string
+  name: string
+  email: string
+  phone_number?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
+  salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
+  salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
+  salePaymentsReceived?: Prisma.SalePaymentCreateNestedManyWithoutReceivedByInput
+  staffProfile?: Prisma.StaffCreateNestedOneWithoutUserInput
+  salon?: Prisma.SalonCreateNestedOneWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutCreatedAppointmentsInput = {
+  id?: string
+  name: string
+  email: string
+  phone_number?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  salonId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branchId?: string | null
+  appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
+  salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
+  salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
+  salePaymentsReceived?: Prisma.SalePaymentUncheckedCreateNestedManyWithoutReceivedByInput
+  staffProfile?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCreatedAppointmentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedAppointmentsInput, Prisma.UserUncheckedCreateWithoutCreatedAppointmentsInput>
+}
+
+export type UserUpsertWithoutCreatedAppointmentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedAppointmentsInput, Prisma.UserUncheckedUpdateWithoutCreatedAppointmentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedAppointmentsInput, Prisma.UserUncheckedCreateWithoutCreatedAppointmentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedAppointmentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedAppointmentsInput, Prisma.UserUncheckedUpdateWithoutCreatedAppointmentsInput>
+}
+
+export type UserUpdateWithoutCreatedAppointmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
+  salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
+  salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
+  salePaymentsReceived?: Prisma.SalePaymentUpdateManyWithoutReceivedByNestedInput
+  staffProfile?: Prisma.StaffUpdateOneWithoutUserNestedInput
+  salon?: Prisma.SalonUpdateOneWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedAppointmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  salonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
+  salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
+  salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
+  salePaymentsReceived?: Prisma.SalePaymentUncheckedUpdateManyWithoutReceivedByNestedInput
+  staffProfile?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAppointmentStatusChangesInput = {
@@ -898,6 +1021,7 @@ export type UserCreateWithoutAppointmentStatusChangesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
@@ -917,6 +1041,7 @@ export type UserUncheckedCreateWithoutAppointmentStatusChangesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branchId?: string | null
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
@@ -950,6 +1075,7 @@ export type UserUpdateWithoutAppointmentStatusChangesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
@@ -969,6 +1095,7 @@ export type UserUncheckedUpdateWithoutAppointmentStatusChangesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -987,6 +1114,7 @@ export type UserCreateWithoutSalesCreatedInput = {
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
   salePaymentsReceived?: Prisma.SalePaymentCreateNestedManyWithoutReceivedByInput
@@ -1006,6 +1134,7 @@ export type UserUncheckedCreateWithoutSalesCreatedInput = {
   updatedAt?: Date | string
   branchId?: string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
   salePaymentsReceived?: Prisma.SalePaymentUncheckedCreateNestedManyWithoutReceivedByInput
@@ -1028,6 +1157,7 @@ export type UserCreateWithoutSalesEditedInput = {
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
   salePaymentsReceived?: Prisma.SalePaymentCreateNestedManyWithoutReceivedByInput
@@ -1047,6 +1177,7 @@ export type UserUncheckedCreateWithoutSalesEditedInput = {
   updatedAt?: Date | string
   branchId?: string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
   salePaymentsReceived?: Prisma.SalePaymentUncheckedCreateNestedManyWithoutReceivedByInput
@@ -1069,6 +1200,7 @@ export type UserCreateWithoutSalesDeletedInput = {
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salePaymentsReceived?: Prisma.SalePaymentCreateNestedManyWithoutReceivedByInput
@@ -1088,6 +1220,7 @@ export type UserUncheckedCreateWithoutSalesDeletedInput = {
   updatedAt?: Date | string
   branchId?: string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salePaymentsReceived?: Prisma.SalePaymentUncheckedCreateNestedManyWithoutReceivedByInput
@@ -1121,6 +1254,7 @@ export type UserUpdateWithoutSalesCreatedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
   salePaymentsReceived?: Prisma.SalePaymentUpdateManyWithoutReceivedByNestedInput
@@ -1140,6 +1274,7 @@ export type UserUncheckedUpdateWithoutSalesCreatedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
   salePaymentsReceived?: Prisma.SalePaymentUncheckedUpdateManyWithoutReceivedByNestedInput
@@ -1168,6 +1303,7 @@ export type UserUpdateWithoutSalesEditedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
   salePaymentsReceived?: Prisma.SalePaymentUpdateManyWithoutReceivedByNestedInput
@@ -1187,6 +1323,7 @@ export type UserUncheckedUpdateWithoutSalesEditedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
   salePaymentsReceived?: Prisma.SalePaymentUncheckedUpdateManyWithoutReceivedByNestedInput
@@ -1215,6 +1352,7 @@ export type UserUpdateWithoutSalesDeletedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salePaymentsReceived?: Prisma.SalePaymentUpdateManyWithoutReceivedByNestedInput
@@ -1234,6 +1372,7 @@ export type UserUncheckedUpdateWithoutSalesDeletedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salePaymentsReceived?: Prisma.SalePaymentUncheckedUpdateManyWithoutReceivedByNestedInput
@@ -1251,6 +1390,7 @@ export type UserCreateWithoutSalePaymentsReceivedInput = {
   updatedAt?: Date | string
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleCreateNestedManyWithoutDeletedByInput
@@ -1270,6 +1410,7 @@ export type UserUncheckedCreateWithoutSalePaymentsReceivedInput = {
   updatedAt?: Date | string
   branchId?: string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  createdAppointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutCreatedByInput
   salesCreated?: Prisma.SaleUncheckedCreateNestedManyWithoutCreatedByInput
   salesEdited?: Prisma.SaleUncheckedCreateNestedManyWithoutEditedByInput
   salesDeleted?: Prisma.SaleUncheckedCreateNestedManyWithoutDeletedByInput
@@ -1303,6 +1444,7 @@ export type UserUpdateWithoutSalePaymentsReceivedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
@@ -1322,6 +1464,7 @@ export type UserUncheckedUpdateWithoutSalePaymentsReceivedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -1351,6 +1494,7 @@ export type UserUpdateWithoutSalonInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
@@ -1369,6 +1513,7 @@ export type UserUncheckedUpdateWithoutSalonInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -1410,6 +1555,7 @@ export type UserUpdateWithoutBranchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUpdateManyWithoutDeletedByNestedInput
@@ -1429,6 +1575,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointmentStatusChanges?: Prisma.AppointmentStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  createdAppointments?: Prisma.AppointmentUncheckedUpdateManyWithoutCreatedByNestedInput
   salesCreated?: Prisma.SaleUncheckedUpdateManyWithoutCreatedByNestedInput
   salesEdited?: Prisma.SaleUncheckedUpdateManyWithoutEditedByNestedInput
   salesDeleted?: Prisma.SaleUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -1455,6 +1602,7 @@ export type UserUncheckedUpdateManyWithoutBranchInput = {
 
 export type UserCountOutputType = {
   appointmentStatusChanges: number
+  createdAppointments: number
   salesCreated: number
   salesEdited: number
   salesDeleted: number
@@ -1463,6 +1611,7 @@ export type UserCountOutputType = {
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointmentStatusChanges?: boolean | UserCountOutputTypeCountAppointmentStatusChangesArgs
+  createdAppointments?: boolean | UserCountOutputTypeCountCreatedAppointmentsArgs
   salesCreated?: boolean | UserCountOutputTypeCountSalesCreatedArgs
   salesEdited?: boolean | UserCountOutputTypeCountSalesEditedArgs
   salesDeleted?: boolean | UserCountOutputTypeCountSalesDeletedArgs
@@ -1484,6 +1633,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountAppointmentStatusChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AppointmentStatusHistoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedAppointmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AppointmentWhereInput
 }
 
 /**
@@ -1528,6 +1684,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   branchId?: boolean
   branch?: boolean | Prisma.User$branchArgs<ExtArgs>
   appointmentStatusChanges?: boolean | Prisma.User$appointmentStatusChangesArgs<ExtArgs>
+  createdAppointments?: boolean | Prisma.User$createdAppointmentsArgs<ExtArgs>
   salesCreated?: boolean | Prisma.User$salesCreatedArgs<ExtArgs>
   salesEdited?: boolean | Prisma.User$salesEditedArgs<ExtArgs>
   salesDeleted?: boolean | Prisma.User$salesDeletedArgs<ExtArgs>
@@ -1584,6 +1741,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.User$branchArgs<ExtArgs>
   appointmentStatusChanges?: boolean | Prisma.User$appointmentStatusChangesArgs<ExtArgs>
+  createdAppointments?: boolean | Prisma.User$createdAppointmentsArgs<ExtArgs>
   salesCreated?: boolean | Prisma.User$salesCreatedArgs<ExtArgs>
   salesEdited?: boolean | Prisma.User$salesEditedArgs<ExtArgs>
   salesDeleted?: boolean | Prisma.User$salesDeletedArgs<ExtArgs>
@@ -1606,6 +1764,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     branch: Prisma.$BranchPayload<ExtArgs> | null
     appointmentStatusChanges: Prisma.$AppointmentStatusHistoryPayload<ExtArgs>[]
+    createdAppointments: Prisma.$AppointmentPayload<ExtArgs>[]
     salesCreated: Prisma.$SalePayload<ExtArgs>[]
     salesEdited: Prisma.$SalePayload<ExtArgs>[]
     salesDeleted: Prisma.$SalePayload<ExtArgs>[]
@@ -2020,6 +2179,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   branch<T extends Prisma.User$branchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$branchArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   appointmentStatusChanges<T extends Prisma.User$appointmentStatusChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$appointmentStatusChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdAppointments<T extends Prisma.User$createdAppointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdAppointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   salesCreated<T extends Prisma.User$salesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$salesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   salesEdited<T extends Prisma.User$salesEditedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$salesEditedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   salesDeleted<T extends Prisma.User$salesDeletedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$salesDeletedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2506,6 +2666,30 @@ export type User$appointmentStatusChangesArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.AppointmentStatusHistoryScalarFieldEnum | Prisma.AppointmentStatusHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.createdAppointments
+ */
+export type User$createdAppointmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Appointment
+   */
+  select?: Prisma.AppointmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Appointment
+   */
+  omit?: Prisma.AppointmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AppointmentInclude<ExtArgs> | null
+  where?: Prisma.AppointmentWhereInput
+  orderBy?: Prisma.AppointmentOrderByWithRelationInput | Prisma.AppointmentOrderByWithRelationInput[]
+  cursor?: Prisma.AppointmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AppointmentScalarFieldEnum | Prisma.AppointmentScalarFieldEnum[]
 }
 
 /**

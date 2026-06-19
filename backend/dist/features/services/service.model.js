@@ -52,10 +52,15 @@ export const ServiceModel = {
             },
         });
     },
-    findBySalon: async (salonId) => {
+    findBySalon: async (salonId, branchId) => {
         return prisma.service.findMany({
             where: {
                 salonId,
+                ...(branchId
+                    ? {
+                        OR: [{ branchId }, { branchId: null }],
+                    }
+                    : {}),
             },
             include: {
                 branch: {
@@ -103,11 +108,16 @@ export const ServiceModel = {
             },
         });
     },
-    findByIdAndSalon: async (id, salonId) => {
+    findByIdAndSalon: async (id, salonId, branchId) => {
         return prisma.service.findFirst({
             where: {
                 id,
                 salonId,
+                ...(branchId
+                    ? {
+                        OR: [{ branchId }, { branchId: null }],
+                    }
+                    : {}),
             },
             include: {
                 branch: {

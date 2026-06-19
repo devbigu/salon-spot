@@ -41,6 +41,7 @@ export const register = async (req, res) => {
             userId: newUser.id,
             role: newUser.role,
             ...(newUser.salonId ? { salonId: newUser.salonId } : {}),
+            ...(newUser.branchId ? { branchId: newUser.branchId } : {}),
         };
         const accessToken = generateAccessToken(tokenPayload);
         const refreshToken = generateRefreshToken(tokenPayload);
@@ -95,6 +96,7 @@ export const login = async (req, res) => {
             userId: user.id,
             role: user.role,
             ...(user.salonId ? { salonId: user.salonId } : {}),
+            ...(user.branchId ? { branchId: user.branchId } : {}),
         };
         const accessToken = generateAccessToken(tokenPayload);
         const refreshToken = generateRefreshToken(tokenPayload);
@@ -142,6 +144,7 @@ export const refresh = async (req, res) => {
             userId: decoded.userId,
             role: decoded.role,
             ...(decoded.salonId ? { salonId: decoded.salonId } : {}),
+            ...(decoded.branchId ? { branchId: decoded.branchId } : {}),
         });
         return res.status(200).json({
             success: true,

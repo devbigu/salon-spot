@@ -19,19 +19,19 @@ router.use(authenticate);
 
 router.post(
   "/",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"),
   createCustomer
 );
 
 router.get(
   "/",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"),
   getCustomers
 );
 
 router.get(
   "/:id/transactions",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"),
   getCustomerTransactions
 );
 
@@ -43,13 +43,13 @@ router.post(
 
 router.get(
   "/:id",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"),
   getCustomerById
 );
 
 router.put(
   "/:id",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"),
   updateCustomer
 );
 

@@ -18,6 +18,25 @@ export const UserModel = {
                 phone_number: true,
                 role: true,
                 salonId: true,
+                branchId: true,
+                createdAt: true,
+            },
+        });
+    },
+    createReceptionist: async (data) => {
+        return prisma.user.create({
+            data: {
+                ...data,
+                role: "RECEPTIONIST",
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                phone_number: true,
+                role: true,
+                salonId: true,
+                branchId: true,
                 createdAt: true,
             },
         });
@@ -37,6 +56,7 @@ export const UserModel = {
                 phone_number: true,
                 role: true,
                 salonId: true,
+                branchId: true,
                 createdAt: true,
             },
         });

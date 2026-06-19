@@ -2,13 +2,15 @@ import { prisma } from "../../config/prisma.js";
 
 export const StaffModel = {
   create: async (data: {
+    staffCode: string;
     name: string;
     email: string;
-    phone?: string;
+    phone: string;
     jobRole: string;
     workingFrom: string;
     workingTo: string;
     weekOff: string;
+    joiningDate: Date;
     salonId: string;
     branchId?: string;
     reportingManagerId?: string;
@@ -33,10 +35,20 @@ export const StaffModel = {
     });
   },
 
-  findBySalon: async (salonId: string) => {
+  findByStaffCode: async (staffCode: string, salonId: string) => {
+    return prisma.staff.findFirst({
+      where: {
+        staffCode,
+        salonId,
+      },
+    });
+  },
+
+  findBySalon: async (salonId: string, branchId?: string) => {
     return prisma.staff.findMany({
       where: {
         salonId,
+        ...(branchId ? { branchId } : {}),
       },
       include: {
         branch: {
@@ -114,11 +126,12 @@ export const StaffModel = {
   });
 },
 
-findByIdAndSalon: async (id: string, salonId: string) => {
+findByIdAndSalon: async (id: string, salonId: string, branchId?: string) => {
   return prisma.staff.findFirst({
     where: {
       id,
       salonId,
+      ...(branchId ? { branchId } : {}),
     },
     include: {
       branch: {

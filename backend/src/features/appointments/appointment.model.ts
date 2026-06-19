@@ -17,6 +17,7 @@ export const AppointmentModel = {
     branchId?: string;
     customerId: string;
     staffId: string;
+    createdById?: string;
     startTime: Date;
     endTime: Date;
     totalDurationMinutes: number;
@@ -38,6 +39,7 @@ export const AppointmentModel = {
         salonId: data.salonId,
         customerId: data.customerId,
         staffId: data.staffId,
+        ...(data.createdById ? { createdById: data.createdById } : {}),
         startTime: data.startTime,
         endTime: data.endTime,
         totalDurationMinutes: data.totalDurationMinutes,
@@ -77,6 +79,14 @@ export const AppointmentModel = {
             id: true,
             name: true,
             jobRole: true,
+          },
+        },
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
           },
         },
         branch: {
@@ -130,6 +140,14 @@ export const AppointmentModel = {
           },
         },
         services: true,
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
       },
       orderBy: {
         startTime: "asc",
@@ -187,6 +205,14 @@ export const AppointmentModel = {
           },
         },
         services: true,
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
       },
       orderBy: {
         startTime: "asc",
@@ -229,6 +255,14 @@ export const AppointmentModel = {
             jobRole: true,
           },
         },
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
         services: {
           include: {
             service: {
@@ -243,11 +277,16 @@ export const AppointmentModel = {
     });
   },
 
-  findByIdAndSalon: async (id: string, salonId: string) => {
+  findByIdAndSalon: async (
+    id: string,
+    salonId: string,
+    branchId?: string
+  ) => {
     return prisma.appointment.findFirst({
       where: {
         id,
         salonId,
+        ...(branchId ? { branchId } : {}),
       },
       include: {
         branch: {
@@ -281,6 +320,14 @@ export const AppointmentModel = {
                 name: true,
               },
             },
+          },
+        },
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
           },
         },
       },
@@ -356,6 +403,14 @@ export const AppointmentModel = {
           },
         },
         services: true,
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
       },
     });
   },
@@ -412,6 +467,14 @@ export const AppointmentModel = {
               name: true,
             },
           },
+        },
+      },
+      createdBy: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
         },
       },
     },
@@ -563,6 +626,14 @@ updateStatusWithHistory: async (
           },
         },
         services: true,
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
         statusHistory: {
           orderBy: {
             createdAt: "desc",

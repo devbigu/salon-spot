@@ -116,7 +116,7 @@ export const getServices = async (req, res) => {
                 message: "Salon ID is missing",
             });
         }
-        const services = await ServiceModel.findBySalon(req.user.salonId);
+        const services = await ServiceModel.findBySalon(req.user.salonId, req.user.role === "RECEPTIONIST" ? req.user.branchId : undefined);
         return res.status(200).json({
             success: true,
             message: "Services fetched successfully",
@@ -139,7 +139,9 @@ export const getServiceById = async (req, res) => {
                 message: "Service ID is required",
             });
         }
-        const service = await getExistingServiceByAccess(req, id);
+        const service = req.user?.role === "RECEPTIONIST" && req.user.salonId
+            ? await ServiceModel.findByIdAndSalon(id, req.user.salonId, req.user.branchId)
+            : await getExistingServiceByAccess(req, id);
         if (!service) {
             return res.status(404).json({
                 success: false,

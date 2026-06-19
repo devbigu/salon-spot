@@ -1,6 +1,7 @@
 import { type Request, type Response } from "express";
 import { UserModel } from "./user.model.js";
 import { hashPass } from "../../utils/password.js";
+import { BranchModel } from "../branches/branch.model.js";
 
 export const getUsers = async (req: Request, res: Response) => {
   return res.status(200).json({
@@ -53,6 +54,74 @@ export const createSalonAdmin = async (req: Request, res: Response) => {
       success: true,
       message: "Salon admin created successfully",
       data: admin,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+export const createReceptionist = async (req: Request, res: Response) => {
+  try {
+    const { name, email, phone_number, password, salonId, branchId } = req.body;
+
+    if (!name || !email || !phone_number || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, email, phone number and password are required",
+      });
+    }
+
+    const finalSalonId =
+      req.user?.role === "SUPER_ADMIN" ? salonId : req.user?.salonId;
+
+    if (!finalSalonId) {
+      return res.status(400).json({
+        success: false,
+        message: "Salon ID is required",
+      });
+    }
+
+    if (branchId) {
+      const branch = await BranchModel.findByIdAndSalon(branchId, finalSalonId);
+
+      if (!branch) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid branch for this salon",
+        });
+      }
+    }
+
+    if (await UserModel.findByEmail(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already exists",
+      });
+    }
+
+    if (await UserModel.findByPhoneNumber(phone_number)) {
+      return res.status(400).json({
+        success: false,
+        message: "Phone number already exists",
+      });
+    }
+
+    const receptionist = await UserModel.createReceptionist({
+      name,
+      email,
+      phone_number,
+      passwordHash: await hashPass(password),
+      salonId: finalSalonId,
+      ...(branchId ? { branchId } : {}),
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Receptionist created successfully",
+      data: receptionist,
     });
   } catch (error) {
     return res.status(500).json({

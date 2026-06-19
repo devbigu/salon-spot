@@ -1777,10 +1777,14 @@ export const CustomerTransactionScalarFieldEnum = {
   id: 'id',
   customerId: 'customerId',
   salonId: 'salonId',
+  invoiceId: 'invoiceId',
+  paymentId: 'paymentId',
   billNo: 'billNo',
   narration: 'narration',
+  type: 'type',
   debit: 'debit',
   credit: 'credit',
+  balanceAfter: 'balanceAfter',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1807,6 +1811,7 @@ export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof 
 
 export const StaffScalarFieldEnum = {
   id: 'id',
+  staffCode: 'staffCode',
   name: 'name',
   email: 'email',
   phone: 'phone',
@@ -1814,6 +1819,7 @@ export const StaffScalarFieldEnum = {
   workingFrom: 'workingFrom',
   workingTo: 'workingTo',
   weekOff: 'weekOff',
+  joiningDate: 'joiningDate',
   status: 'status',
   salonId: 'salonId',
   userId: 'userId',
@@ -1863,6 +1869,7 @@ export const AppointmentScalarFieldEnum = {
   branchId: 'branchId',
   customerId: 'customerId',
   staffId: 'staffId',
+  createdById: 'createdById',
   startTime: 'startTime',
   endTime: 'endTime',
   totalDurationMinutes: 'totalDurationMinutes',
@@ -2149,6 +2156,20 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CustomerTransactionType'
+ */
+export type EnumCustomerTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomerTransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'CustomerTransactionType[]'
+ */
+export type ListEnumCustomerTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomerTransactionType[]'>
     
 
 

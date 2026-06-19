@@ -21,13 +21,13 @@ router.post(
 
 router.get(
   "/",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST"),
   getBranches
 );
 
 router.get(
   "/:id",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST"),
   getBranchById
 );
 

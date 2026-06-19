@@ -1,6 +1,43 @@
 import { type Request, type Response } from "express";
 import { StaffModel } from "./staff.model.js";
 import { BranchModel } from "../branches/branch.model.js";
+import { SalonModel } from "../salons/salon.model.js";
+
+const getSalonInitials = (salonName: string) => {
+  const words = salonName
+    .trim()
+    .split(/\s+/)
+    .map((word) => word.replace(/[^a-zA-Z0-9]/g, ""))
+    .filter(Boolean);
+
+  if (words.length === 0) {
+    return "SL";
+  }
+
+  if (words.length === 1) {
+    return words[0]!.slice(0, 2).toUpperCase();
+  }
+
+  return words.map((word) => word[0]).join("").toUpperCase();
+};
+
+const getIsoWeekday = (date: Date) => {
+  const utcDay = date.getUTCDay();
+  return utcDay === 0 ? 7 : utcDay;
+};
+
+const generateStaffCode = (
+  salonName: string,
+  joiningDate: Date,
+  phone: string
+) => {
+  const phoneDigits = phone.replace(/\D/g, "");
+  const month = String(joiningDate.getUTCMonth() + 1).padStart(2, "0");
+  const weekday = getIsoWeekday(joiningDate);
+  const phoneSuffix = phoneDigits.slice(-3);
+
+  return `${getSalonInitials(salonName)}-${month}-${weekday}-${phoneSuffix}`;
+};
 
 const getStaffIdParam = (req: Request) => {
   const { id } = req.params;
@@ -17,15 +54,33 @@ export const createStaff = async (req: Request, res: Response) => {
       workingFrom,
       workingTo,
       weekOff,
+      joiningDate,
       salonId,
       branchId,
       reportingManagerId,
     } = req.body;
 
-    if (!name || !email || !jobRole || !workingFrom || !workingTo || !weekOff) {
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !jobRole ||
+      !workingFrom ||
+      !workingTo ||
+      !weekOff
+    ) {
       return res.status(400).json({
         success: false,
-        message: "Required fields are missing",
+        message: "Name, email, phone and work details are required",
+      });
+    }
+
+    const phoneDigits = String(phone).replace(/\D/g, "");
+
+    if (phoneDigits.length < 3) {
+      return res.status(400).json({
+        success: false,
+        message: "Phone number must contain at least 3 digits",
       });
     }
 
@@ -51,6 +106,42 @@ export const createStaff = async (req: Request, res: Response) => {
       });
     }
 
+    const salon = await SalonModel.findById(finalSalonId);
+
+    if (!salon) {
+      return res.status(400).json({
+        success: false,
+        message: "Salon not found",
+      });
+    }
+
+    const finalJoiningDate = joiningDate ? new Date(joiningDate) : new Date();
+
+    if (Number.isNaN(finalJoiningDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid joiningDate",
+      });
+    }
+
+    const staffCode = generateStaffCode(
+      salon.name,
+      finalJoiningDate,
+      String(phone)
+    );
+
+    const existingStaffCode = await StaffModel.findByStaffCode(
+      staffCode,
+      finalSalonId
+    );
+
+    if (existingStaffCode) {
+      return res.status(409).json({
+        success: false,
+        message: "Staff code already exists",
+      });
+    }
+
     if (branchId) {
       const branch = await BranchModel.findByIdandSalon(branchId, finalSalonId);
 
@@ -63,13 +154,15 @@ export const createStaff = async (req: Request, res: Response) => {
     }
 
     const staff = await StaffModel.create({
+      staffCode,
       name,
       email,
-      phone,
+      phone: String(phone),
       jobRole,
       workingFrom,
       workingTo,
       weekOff,
+      joiningDate: finalJoiningDate,
       salonId: finalSalonId,
       branchId,
       reportingManagerId,
@@ -272,7 +365,11 @@ export const getStaffById = async (req: Request, res: Response) => {
         });
       }
 
-      staff = await StaffModel.findByIdAndSalon(id, req.user.salonId);
+      staff = await StaffModel.findByIdAndSalon(
+        id,
+        req.user.salonId,
+        req.user.role === "RECEPTIONIST" ? req.user.branchId : undefined
+      );
     }
 
     if (!staff) {
@@ -314,7 +411,10 @@ export const getStaff = async (req: Request, res: Response) => {
       });
     }
 
-    const staff = await StaffModel.findBySalon(req.user.salonId);
+    const staff = await StaffModel.findBySalon(
+      req.user.salonId,
+      req.user.role === "RECEPTIONIST" ? req.user.branchId : undefined
+    );
 
     return res.status(200).json({
       success: true,

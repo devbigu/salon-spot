@@ -17,20 +17,20 @@ import { requireRole } from "../../middlewares/rbac.middleware.js";
 const router = Router();
 
 router.use(authenticate);
-router.post("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), createAppointment);
+router.post("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"), createAppointment);
 
-router.get("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), getAppointments);
+router.get("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"), getAppointments);
 
-router.patch("/:id/status", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), updateAppointmentStatus);
+router.patch("/:id/status", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"), updateAppointmentStatus);
 
-router.patch("/:id/reschedule", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), rescheduleAppointment);
+router.patch("/:id/reschedule", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"), rescheduleAppointment);
 
-router.get("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), getAppointmentById);
+router.get("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"), getAppointmentById);
 
-router.put("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), updateAppointmentBasicDetails);
+router.put("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"), updateAppointmentBasicDetails);
 
 router.delete("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN"), deleteAppointment);
 
-router.get("/:id/tracking",requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),getAppointmentTracking
+router.get("/:id/tracking",requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"),getAppointmentTracking
 );
 export default router;

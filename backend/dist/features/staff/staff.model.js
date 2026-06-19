@@ -20,10 +20,19 @@ export const StaffModel = {
             },
         });
     },
-    findBySalon: async (salonId) => {
+    findByStaffCode: async (staffCode, salonId) => {
+        return prisma.staff.findFirst({
+            where: {
+                staffCode,
+                salonId,
+            },
+        });
+    },
+    findBySalon: async (salonId, branchId) => {
         return prisma.staff.findMany({
             where: {
                 salonId,
+                ...(branchId ? { branchId } : {}),
             },
             include: {
                 branch: {
@@ -99,11 +108,12 @@ export const StaffModel = {
             },
         });
     },
-    findByIdAndSalon: async (id, salonId) => {
+    findByIdAndSalon: async (id, salonId, branchId) => {
         return prisma.staff.findFirst({
             where: {
                 id,
                 salonId,
+                ...(branchId ? { branchId } : {}),
             },
             include: {
                 branch: {

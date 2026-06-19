@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   getUsers,
   createSalonAdmin,
+  createReceptionist,
 } from "./user.controller.js";
 
 import { authenticate } from "../../middlewares/auth.middleware.js";
@@ -18,6 +19,12 @@ router.post(
   "/salon-admin",
   requireRole("SUPER_ADMIN"),
   createSalonAdmin
+);
+
+router.post(
+  "/receptionist",
+  requireRole("SUPER_ADMIN", "SALON_ADMIN"),
+  createReceptionist
 );
 
 export default router;

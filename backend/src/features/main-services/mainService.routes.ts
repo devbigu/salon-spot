@@ -24,7 +24,7 @@ router.post(
 
 router.get(
   "/",
-  requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"),
+  requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"),
   getMainServices
 );
 

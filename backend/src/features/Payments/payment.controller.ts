@@ -2,7 +2,7 @@ import { type Request, type Response } from "express";
 
 import { PaymentModel } from "./payment.model.js";
 import { InvoiceModel } from "../Invoices/invoice.model.js";
-
+import { CustomerModel } from "../customers/customer.model.js";
 const PAYMENT_METHODS = ["CASH", "CARD", "UPI", "OTHER"] as const;
 
 type PaymentMethod = (typeof PAYMENT_METHODS)[number];
@@ -136,6 +136,16 @@ export const createPayment = async (req: Request, res: Response) => {
       newPaidAmount,
       newBalanceAmount,
       newPaymentStatus,
+    });
+
+    await CustomerModel.decreaseOutstandingWithTransaction({
+      customerId: invoice.customerId,
+      salonId: invoice.salonId,
+      invoiceId: invoice.id,
+      paymentId: result.payment.id,
+      billNo: invoice.invoiceCode,
+      amount: finalAmount,
+      narration: `Payment received via ${method}`,
     });
 
     return res.status(201).json({

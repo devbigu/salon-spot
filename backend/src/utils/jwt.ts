@@ -1,10 +1,11 @@
 import jwt from "jsonwebtoken";
 import { env } from "../config/env.js";
 
-interface JwtTokenPayload{
-    userId: string;
-    salonId?: string;
-    role: string;
+interface JwtTokenPayload {
+  userId: string;
+  salonId?: string;
+  branchId?: string;
+  role: string;
 }
 
 export const generateAccessToken = (payload: JwtTokenPayload) => {

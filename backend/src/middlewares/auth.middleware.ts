@@ -5,6 +5,7 @@ import { env } from "../config/env.js";
 interface AccessTokenPayload {
   userId: string;
   salonId?: string;
+  branchId?: string;
   role: string;
 }
 
@@ -48,6 +49,9 @@ export const authenticate = (
       userId: decoded.userId,
       role: decoded.role,
       ...(typeof decoded.salonId === "string" ? { salonId: decoded.salonId } : {}),
+      ...(typeof decoded.branchId === "string"
+        ? { branchId: decoded.branchId }
+        : {}),
     };
 
     req.user = user;

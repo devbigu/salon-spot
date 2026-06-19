@@ -58,7 +58,11 @@ const getExistingCustomerByAccess = async (req: Request, customerId: string) => 
     return null;
   }
 
-  return CustomerModel.findByIdAndSalon(customerId, salonId);
+  return CustomerModel.findByIdAndSalon(
+    customerId,
+    salonId,
+    req.user?.role === "RECEPTIONIST" ? req.user.branchId : undefined
+  );
 };
 
 export const createCustomer = async (req: Request, res: Response) => {
@@ -111,8 +115,24 @@ export const createCustomer = async (req: Request, res: Response) => {
       });
     }
 
-    if (branchId) {
-      const branch = await BranchModel.findByIdAndSalon(branchId, finalSalonId);
+    let finalBranchId: string | undefined = branchId;
+
+    if (req.user?.role === "RECEPTIONIST" && req.user.branchId) {
+      if (branchId && branchId !== req.user.branchId) {
+        return res.status(403).json({
+          success: false,
+          message: "You do not have access to this branch",
+        });
+      }
+
+      finalBranchId = req.user.branchId;
+    }
+
+    if (finalBranchId) {
+      const branch = await BranchModel.findByIdAndSalon(
+        finalBranchId,
+        finalSalonId
+      );
 
       if (!branch) {
         return res.status(400).json({
@@ -137,7 +157,7 @@ export const createCustomer = async (req: Request, res: Response) => {
         ? { anniversaryDate: new Date(anniversaryDate) }
         : {}),
       ...(status ? { status } : {}),
-      ...(branchId ? { branchId } : {}),
+      ...(finalBranchId ? { branchId: finalBranchId } : {}),
     };
 
     const customer = await CustomerModel.create(customerData);
@@ -174,7 +194,10 @@ export const getCustomers = async (req: Request, res: Response) => {
       });
     }
 
-    const customers = await CustomerModel.findBySalon(req.user.salonId);
+    const customers = await CustomerModel.findBySalon(
+      req.user.salonId,
+      req.user.role === "RECEPTIONIST" ? req.user.branchId : undefined
+    );
 
     return res.status(200).json({
       success: true,
@@ -262,6 +285,18 @@ export const updateCustomer = async (req: Request, res: Response) => {
       return res.status(400).json({
         success: false,
         message: "Invalid customer status",
+      });
+    }
+
+    if (
+      req.user?.role === "RECEPTIONIST" &&
+      req.user.branchId &&
+      "branchId" in req.body &&
+      branchId !== req.user.branchId
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "You do not have access to this branch",
       });
     }
 

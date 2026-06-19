@@ -12,4 +12,11 @@ export const SalonModel = {
             },
         });
     },
+    findById: async (id) => {
+        return prisma.salon.findUnique({
+            where: {
+                id,
+            },
+        });
+    },
 };

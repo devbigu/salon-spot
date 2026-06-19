@@ -2,6 +2,8 @@ import { type Request, type Response } from "express";
 
 import { InvoiceModel } from "./invoice.model.js";
 import { AppointmentModel } from "../appointments/appointment.model.js";
+import { CustomerModel } from "../customers/customer.model.js";
+
 
 const INVOICE_TYPES = ["GST_INVOICE", "BILL_OF_SUPPLY"] as const;
 const INVOICE_STATUSES = ["DRAFT", "ISSUED", "CANCELLED"] as const;
@@ -235,7 +237,17 @@ export const createInvoiceFromAppointment = async (
               )
             : Number(item.price),
       })),
+      
     });
+    await CustomerModel.increaseOutstandingWithTransaction({
+  customerId: invoice.customerId,
+  salonId: invoice.salonId,
+  invoiceId: invoice.id,
+  billNo: invoice.invoiceCode,
+  amount: Number(invoice.totalAmount),
+  narration: `Invoice generated: ${invoice.invoiceCode}`,
+});
+
 
     return res.status(201).json({
       success: true,

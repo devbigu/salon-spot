@@ -5,7 +5,7 @@ import { requireRole } from "../../middlewares/rbac.middleware.js";
 const router = Router();
 router.use(authenticate);
 router.post("/", requireRole("SUPER_ADMIN", "SALON_ADMIN"), createService);
-router.get("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), getServices);
+router.get("/", requireRole("SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST", "STAFF"), getServices);
 router.patch("/:id/status", requireRole("SUPER_ADMIN", "SALON_ADMIN"), updateServiceStatus);
 router.get("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN", "STAFF"), getServiceById);
 router.put("/:id", requireRole("SUPER_ADMIN", "SALON_ADMIN"), updateService);
