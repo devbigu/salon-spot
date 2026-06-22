@@ -1,0 +1,40 @@
+/* eslint-disable react/prop-types */
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Spinner } from "reactstrap";
+import { useAuth } from "./AuthContext";
+
+const SessionLoader = () => (
+  <div className="min-vh-100 d-flex align-items-center justify-content-center">
+    <div className="d-flex align-items-center gap-2 text-primary">
+      <Spinner size="sm" />
+      <span>Checking your session...</span>
+    </div>
+  </div>
+);
+
+export const ProtectedRoute = () => {
+  const { checkingSession, isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  if (checkingSession) return <SessionLoader />;
+
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/auth-login" replace state={{ from: location }} />
+  );
+};
+
+export const PublicOnlyRoute = () => {
+  const { checkingSession, isAuthenticated } = useAuth();
+
+  if (checkingSession) return <SessionLoader />;
+  return isAuthenticated ? <Navigate to="/" replace /> : <Outlet />;
+};
+
+export const RoleRoute = ({ roles }) => {
+  const { checkingSession, user } = useAuth();
+
+  if (checkingSession) return <SessionLoader />;
+  return roles.includes(user?.role) ? <Outlet /> : <Navigate to="/" replace />;
+};

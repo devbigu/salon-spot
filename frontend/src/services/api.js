@@ -1,0 +1,97 @@
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/+$/, "");
+const SESSION_KEY = "salon.auth.session";
+
+export class ApiError extends Error {
+  constructor(message, status = 0, errors = null) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.errors = errors;
+  }
+}
+
+const readSession = () => {
+  try {
+    return JSON.parse(localStorage.getItem(SESSION_KEY) || "null");
+  } catch {
+    return null;
+  }
+};
+
+const toQuery = (params = {}) => {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      query.set(key, String(value));
+    }
+  });
+  const value = query.toString();
+  return value ? `?${value}` : "";
+};
+
+export const request = async (path, options = {}, retrying = false) => {
+  const session = readSession();
+  const { query, body, headers, ...fetchOptions } = options;
+  let response;
+
+  try {
+    response = await fetch(`${API_URL}${path}${toQuery(query)}`, {
+      credentials: "include",
+      ...fetchOptions,
+      headers: {
+        Accept: "application/json",
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+        ...(session?.accessToken
+          ? { Authorization: `Bearer ${session.accessToken}` }
+          : {}),
+        ...headers,
+      },
+      ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+    });
+  } catch {
+    throw new ApiError("Cannot connect to the backend on port 5000.");
+  }
+
+  const contentType = response.headers.get("content-type") || "";
+  const payload = contentType.includes("application/json")
+    ? await response.json()
+    : null;
+
+  if (
+    response.status === 401 &&
+    !retrying &&
+    session?.accessToken &&
+    !path.startsWith("/api/auth/")
+  ) {
+    try {
+      const refreshResponse = await fetch(`${API_URL}/api/auth/refresh`, {
+        method: "POST",
+        credentials: "include",
+        headers: { Accept: "application/json" },
+      });
+      const refreshPayload = await refreshResponse.json();
+      const accessToken = refreshPayload?.data?.accessToken;
+      if (refreshResponse.ok && accessToken) {
+        localStorage.setItem(
+          SESSION_KEY,
+          JSON.stringify({ ...session, accessToken })
+        );
+        return request(path, options, true);
+      }
+    } catch {
+      // The original 401 response below remains the source of truth.
+    }
+  }
+
+  if (!response.ok || payload?.success === false) {
+    throw new ApiError(
+      payload?.message || `Request failed with status ${response.status}`,
+      response.status,
+      payload?.errors || null
+    );
+  }
+
+  return payload;
+};
+
+export const apiConfig = { apiUrl: API_URL, sessionKey: SESSION_KEY };

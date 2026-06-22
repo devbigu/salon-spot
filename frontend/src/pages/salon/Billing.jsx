@@ -1,0 +1,352 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Alert,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
+} from "reactstrap";
+import { Button, Icon } from "@/components/Component";
+import PageShell from "@/components/salon/PageShell";
+import DataGrid from "@/components/salon/DataGrid";
+import DetailsModal from "@/components/salon/DetailsModal";
+import SchemaModal from "@/components/salon/SchemaModal";
+import StatusBadge from "@/components/salon/StatusBadge";
+import { useAuth } from "@/auth/AuthContext";
+import { salonApi } from "@/services/salonApi";
+import {
+  formatDate,
+  formatMoney,
+  roleCanManage,
+  toLocalInput,
+} from "@/utils/salonFormat";
+
+const Billing = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [tab, setTab] = useState("invoices");
+  const [invoices, setInvoices] = useState([]);
+  const [payments, setPayments] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [invoiceSearch, setInvoiceSearch] = useState("");
+  const [action, setAction] = useState(null);
+  const [selected, setSelected] = useState(null);
+  const [paymentDetails, setPaymentDetails] = useState(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    const [invoiceResult, paymentResult, appointmentResult] =
+      await Promise.allSettled([
+        salonApi.invoices.list(),
+        salonApi.payments.list(),
+        salonApi.appointments.list(),
+      ]);
+    if (invoiceResult.status === "fulfilled") {
+      setInvoices(invoiceResult.value.data || []);
+    } else {
+      setError(invoiceResult.reason?.message || "Unable to load invoices.");
+    }
+    if (paymentResult.status === "fulfilled") {
+      setPayments(paymentResult.value.data || []);
+    }
+    if (appointmentResult.status === "fulfilled") {
+      setAppointments(appointmentResult.value.data || []);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  const completedWithoutInvoice = appointments.filter(
+    (appointment) =>
+      appointment.status === "COMPLETED" &&
+      !invoices.some((invoice) => invoice.appointmentId === appointment.id)
+  );
+  const payableInvoices = invoices.filter(
+    (invoice) =>
+      invoice.status !== "CANCELLED" && invoice.paymentStatus !== "PAID"
+  );
+  const visibleInvoices = invoices.filter((invoice) => {
+    const query = invoiceSearch.trim().toLowerCase();
+    if (!query) return true;
+    return [invoice.invoiceCode, invoice.customerName, invoice.customerPhone]
+      .filter(Boolean)
+      .some((value) => String(value).toLowerCase().includes(query));
+  });
+
+  const form = useMemo(() => {
+    if (action === "invoice") {
+      return {
+        title: "Generate invoice from appointment",
+        submitLabel: "Generate invoice",
+        fields: [
+          {
+            name: "appointmentId",
+            label: "Completed appointment",
+            type: "select",
+            required: true,
+            fullWidth: true,
+            options: completedWithoutInvoice.map((item) => ({
+              value: item.id,
+              label: `${item.appointmentCode} · ${item.customer?.name} · ${formatMoney(item.estimatedAmount)}`,
+            })),
+          },
+          {
+            name: "invoiceType",
+            label: "Invoice type",
+            type: "select",
+            defaultValue: "BILL_OF_SUPPLY",
+            options: [
+              { value: "BILL_OF_SUPPLY", label: "Bill of supply" },
+              { value: "GST_INVOICE", label: "GST invoice" },
+            ],
+          },
+          { name: "discountAmount", label: "Discount", type: "number", min: 0, step: "0.01", defaultValue: 0 },
+          { name: "processingFeeAmount", label: "Processing fee", type: "number", min: 0, step: "0.01", defaultValue: 0 },
+          { name: "taxPercent", label: "Tax percent", type: "number", min: 0, step: "0.01", defaultValue: 0 },
+          { name: "billingNote", label: "Billing note", type: "textarea", fullWidth: true },
+          { name: "footerNote", label: "Footer note", type: "textarea", fullWidth: true },
+        ],
+        submit: ({ appointmentId, ...values }) =>
+          salonApi.invoices.fromAppointment(appointmentId, values),
+      };
+    }
+    return {
+      title: "Record payment",
+      submitLabel: "Record payment",
+      fields: [
+        {
+          name: "invoiceId",
+          label: "Invoice",
+          type: "select",
+          required: true,
+          fullWidth: true,
+          options: payableInvoices.map((item) => ({
+            value: item.id,
+            label: `${item.invoiceCode} · ${item.customerName} · Balance ${formatMoney(item.balanceAmount)}`,
+          })),
+          defaultValue: selected?.id || "",
+        },
+        { name: "amount", label: "Amount", type: "number", min: 0.01, step: "0.01", required: true },
+        {
+          name: "method",
+          label: "Payment method",
+          type: "select",
+          required: true,
+          options: ["CASH", "CARD", "UPI", "OTHER"].map((value) => ({
+            value,
+            label: value,
+          })),
+        },
+        { name: "referenceNo", label: "Reference number" },
+        {
+          name: "paidAt",
+          label: "Paid at",
+          type: "datetime-local",
+          defaultValue: toLocalInput(new Date()),
+        },
+        { name: "note", label: "Payment note", type: "textarea", fullWidth: true },
+      ],
+      submit: (values) =>
+        salonApi.payments.create({
+          ...values,
+          ...(values.paidAt
+            ? { paidAt: new Date(values.paidAt).toISOString() }
+            : {}),
+        }),
+    };
+  }, [action, completedWithoutInvoice, payableInvoices, selected]);
+
+  const viewPayment = async (row) => {
+    try {
+      const response = await salonApi.payments.get(row.id);
+      setPaymentDetails(response.data);
+    } catch (viewError) {
+      setError(viewError.message);
+    }
+  };
+
+  const cancelInvoice = async (invoice) => {
+    if (!window.confirm(`Cancel invoice ${invoice.invoiceCode}?`)) return;
+    try {
+      await salonApi.invoices.cancel(invoice.id);
+      await load();
+    } catch (cancelError) {
+      setError(cancelError.message);
+    }
+  };
+
+  return (
+    <PageShell
+      title="Billing & payments"
+      description="Generate invoices from completed appointments and record payments against outstanding balances."
+      tools={
+        <>
+          <Button color="info" onClick={() => { setSelected(null); setAction("payment"); }}>
+            <Icon name="wallet-in" /> Record payment
+          </Button>
+          <Button color="primary" onClick={() => { setSelected(null); setAction("invoice"); }}>
+            <Icon name="file-plus" /> Generate invoice
+          </Button>
+        </>
+      }
+    >
+      {error && <Alert color="danger">{error}</Alert>}
+      <Nav tabs className="mt-n2 mb-4">
+        <NavItem>
+          <NavLink
+            href="#invoices"
+            active={tab === "invoices"}
+            onClick={(event) => {
+              event.preventDefault();
+              setTab("invoices");
+            }}
+          >
+            Invoices ({invoices.length})
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            href="#payments"
+            active={tab === "payments"}
+            onClick={(event) => {
+              event.preventDefault();
+              setTab("payments");
+            }}
+          >
+            Payments ({payments.length})
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={tab}>
+        <TabPane tabId="invoices">
+          <div className="card card-bordered mb-3">
+            <div className="card-inner py-3">
+              <div className="form-control-wrap">
+                <div className="form-icon form-icon-left">
+                  <Icon name="search" />
+                </div>
+                <input
+                  type="search"
+                  className="form-control"
+                  placeholder="Search by invoice number or customer name"
+                  value={invoiceSearch}
+                  onChange={(event) => setInvoiceSearch(event.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+          <DataGrid
+            rows={visibleInvoices}
+            loading={loading}
+            columns={[
+              { key: "invoiceCode", label: "Invoice" },
+              { key: "customerName", label: "Customer" },
+              { key: "invoiceDate", label: "Date", render: (value) => formatDate(value) },
+              { key: "totalAmount", label: "Total", render: formatMoney },
+              { key: "paidAmount", label: "Paid", render: formatMoney },
+              { key: "balanceAmount", label: "Balance", render: formatMoney },
+              { key: "paymentStatus", label: "Payment", render: (value) => <StatusBadge value={value} /> },
+              { key: "status", label: "Status", render: (value) => <StatusBadge value={value} /> },
+            ]}
+            renderActions={(row) => (
+              <>
+                <Button
+                  size="sm"
+                  color="primary"
+                  outline
+                  onClick={() => navigate(`/billing/invoices/${row.id}`)}
+                >
+                  View
+                </Button>
+                <Button
+                  size="sm"
+                  color="light"
+                  className="ms-1"
+                  onClick={() =>
+                    window.open(`/billing/invoices/${row.id}/print`, "_blank")
+                  }
+                >
+                  <Icon name="printer-fill" />
+                </Button>
+                {row.status !== "CANCELLED" && row.paymentStatus !== "PAID" && (
+                  <Button
+                    size="sm"
+                    color="success"
+                    outline
+                    className="ms-1"
+                    onClick={() => {
+                      setSelected(row);
+                      setAction("payment");
+                    }}
+                  >
+                    Pay
+                  </Button>
+                )}
+                {roleCanManage(user?.role) &&
+                  row.status !== "CANCELLED" &&
+                  row.paymentStatus === "UNPAID" && (
+                    <Button
+                      size="sm"
+                      color="danger"
+                      outline
+                      className="ms-1"
+                      onClick={() => cancelInvoice(row)}
+                    >
+                      Cancel
+                    </Button>
+                  )}
+              </>
+            )}
+          />
+        </TabPane>
+        <TabPane tabId="payments">
+          <DataGrid
+            rows={payments}
+            loading={loading}
+            onView={viewPayment}
+            columns={[
+              { key: "paidAt", label: "Paid at", render: (value) => formatDate(value, true) },
+              { key: "invoice", label: "Invoice", render: (value) => value?.invoiceCode || "—" },
+              { key: "customer", label: "Customer", render: (value) => value?.name || "—" },
+              { key: "amount", label: "Amount", render: formatMoney },
+              { key: "method", label: "Method", render: (value) => <StatusBadge value={value} /> },
+              { key: "referenceNo", label: "Reference" },
+            ]}
+          />
+        </TabPane>
+      </TabContent>
+
+      <SchemaModal
+        isOpen={Boolean(action)}
+        toggle={() => setAction(null)}
+        title={form.title}
+        fields={form.fields}
+        submitLabel={form.submitLabel}
+        onSubmit={async (values) => {
+          const response = await form.submit(values);
+          await load();
+          if (action === "invoice" && response?.data?.id) {
+            navigate(`/billing/invoices/${response.data.id}`);
+          }
+        }}
+      />
+      <DetailsModal
+        isOpen={Boolean(paymentDetails)}
+        toggle={() => setPaymentDetails(null)}
+        title="Payment details"
+        data={paymentDetails}
+      />
+    </PageShell>
+  );
+};
+
+export default Billing;

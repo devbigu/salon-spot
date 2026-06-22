@@ -49,4 +49,12 @@ describe("Auth API", () => {
     expect(res.body.data.user.email).toBe(email);
     expect(res.headers["set-cookie"]).toBeDefined();
   });
+
+  it("should clear the refresh cookie without requiring an access token", async () => {
+    const res = await request(app).post("/api/auth/logout");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.headers["set-cookie"]?.[0]).toContain("refreshToken=;");
+  });
 });

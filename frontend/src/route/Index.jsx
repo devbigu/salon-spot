@@ -1,0 +1,130 @@
+import { useEffect } from "react";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+
+import Homepage from "@/pages/Homepage";
+import Appointments from "@/pages/salon/Appointments";
+import Billing from "@/pages/salon/Billing";
+import InvoiceDetails from "@/pages/salon/InvoiceDetails";
+import InvoicePrint from "@/pages/salon/InvoicePrint";
+import Customers from "@/pages/salon/Customers";
+import Management from "@/pages/salon/Management";
+import ServiceCatalog from "@/pages/salon/ServiceCatalog";
+import Support from "@/pages/salon/Support";
+
+import Login from "@/pages/auth/Login";
+import Register from "@/pages/auth/Register";
+import ForgotPassword from "@/pages/auth/ForgotPassword";
+import Success from "@/pages/auth/Success";
+import PublicSupport from "@/pages/auth/PublicSupport";
+
+import Terms from "@/pages/others/Terms";
+import Error404Modern from "@/pages/error/404-modern";
+
+import Layout from "@/layout/Index";
+import LayoutNoSidebar from "@/layout/Index-nosidebar";
+import ThemeProvider from "@/layout/provider/Theme";
+import {
+  ProtectedRoute,
+  PublicOnlyRoute,
+  RoleRoute,
+} from "@/auth/AuthRoutes";
+
+const ScrollToTop = ({ children }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  return children;
+};
+
+const Router = () => (
+  <BrowserRouter
+    future={{
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    }}
+  >
+    <ScrollToTop>
+      <Routes>
+        <Route element={<ThemeProvider />}>
+          <Route element={<ProtectedRoute />}>
+            <Route element={<Layout />}>
+              <Route index element={<Homepage />} />
+              <Route
+                element={
+                  <RoleRoute
+                    roles={[
+                      "SUPER_ADMIN",
+                      "SALON_ADMIN",
+                      "RECEPTIONIST",
+                      "STAFF",
+                    ]}
+                  />
+                }
+              >
+                <Route path="appointments" element={<Appointments />} />
+                <Route path="customers" element={<Customers />} />
+                <Route path="services" element={<ServiceCatalog />} />
+                <Route path="support" element={<Support />} />
+              </Route>
+
+              <Route
+                element={
+                  <RoleRoute roles={["SUPER_ADMIN", "SALON_ADMIN", "STAFF"]} />
+                }
+              >
+                <Route path="billing" element={<Billing />} />
+                <Route
+                  path="billing/invoices/:invoiceId"
+                  element={<InvoiceDetails />}
+                />
+              </Route>
+
+              <Route
+                element={
+                  <RoleRoute
+                    roles={["SUPER_ADMIN", "SALON_ADMIN", "RECEPTIONIST"]}
+                  />
+                }
+              >
+                <Route path="management" element={<Management />} />
+              </Route>
+            </Route>
+
+            <Route
+              element={
+                <RoleRoute roles={["SUPER_ADMIN", "SALON_ADMIN", "STAFF"]} />
+              }
+            >
+              <Route element={<LayoutNoSidebar />}>
+                <Route
+                  path="billing/invoices/:invoiceId/print"
+                  element={<InvoicePrint />}
+                />
+              </Route>
+            </Route>
+          </Route>
+
+          <Route element={<PublicOnlyRoute />}>
+            <Route element={<LayoutNoSidebar />}>
+              <Route path="auth-success" element={<Success />} />
+              <Route path="auth-reset" element={<ForgotPassword />} />
+              <Route path="auth-register" element={<Register />} />
+              <Route path="auth-login" element={<Login />} />
+            </Route>
+          </Route>
+
+          <Route element={<LayoutNoSidebar />}>
+            <Route path="support/public" element={<PublicSupport />} />
+            <Route path="pages/terms-policy" element={<Terms />} />
+            <Route path="*" element={<Error404Modern />} />
+          </Route>
+        </Route>
+      </Routes>
+    </ScrollToTop>
+  </BrowserRouter>
+);
+
+export default Router;

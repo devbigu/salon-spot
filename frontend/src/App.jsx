@@ -1,8 +1,11 @@
-import Login from './pages/login/login.jsx'
-import './App.css'
+import Router from "./route/Index";
+import { AuthProvider } from "./auth/AuthContext";
 
-function App() {
-  return <Login />
-}
-
-export default App
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router />
+    </AuthProvider>
+  );
+};
+export default App;

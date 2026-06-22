@@ -1,0 +1,32 @@
+/* eslint-disable react/prop-types */
+import { Outlet } from "react-router-dom";
+import getMenu from "./sidebar/MenuData";
+import Sidebar from "./sidebar/Sidebar";
+import Head from "./head/Head";
+import Header from "./header/Header";
+import Footer from "./footer/Footer";
+import AppRoot from "./global/AppRoot";
+import AppMain from "./global/AppMain";
+import AppWrap from "./global/AppWrap";
+import { useAuth } from "@/auth/AuthContext";
+
+const Layout = ({title}) => {
+  const { user } = useAuth();
+  const menu = getMenu(user?.role);
+  return (
+    <>
+      <Head title={!title && 'Loading'} />
+      <AppRoot>
+        <AppMain>
+          <Sidebar menuData={menu} fixed />
+          <AppWrap>
+            <Header fixed />
+              <Outlet />
+            <Footer />
+          </AppWrap>
+        </AppMain>
+      </AppRoot>
+    </>
+  );
+};
+export default Layout;
